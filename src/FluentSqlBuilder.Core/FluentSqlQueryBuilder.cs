@@ -19,7 +19,7 @@ namespace SqlBuilderFluent
         private readonly SqlBuilderFormatting _formatting;
         private readonly IDictionary<string, object> _parameters = new Dictionary<string, object>();
         private SqlQueryBuilderExtension _sqlQueryBuilderExtension;
-        private string _tableNameAliasOverride;
+        private string _tableNameRealOverride;
         private int? _limit = null;
         private int? _pageSize = null;
         private int? _pageNumber = null;
@@ -143,46 +143,6 @@ namespace SqlBuilderFluent
             _sqlQueryBuilderExtension.AddClauseOperation(clauseInput, targetClauseType, selectFunction);
         }
 
-        public string GetSelectString()
-        {
-            var columns = _sqlQueryBuilderExtension.GetColumns();
-            var schemaName = _sqlQueryBuilderExtension.GetSchemaName();
-            var tableName = _sqlQueryBuilderExtension.GetTableNameFrom();
-            var joins = _sqlQueryBuilderExtension.GetJoins();
-            var where = _sqlQueryBuilderExtension.GetWhere();
-            var order = _sqlQueryBuilderExtension.GetOrder();
-            var grouping = _sqlQueryBuilderExtension.GetGrouping();
-            var having = _sqlQueryBuilderExtension.GetHaving();
-
-            var sqlSelect = _sqlAdapter.GetSelectString(columns, _limit, schemaName, tableName, _tableNameAliasOverride, joins, where, order, grouping, having, _formatting);
-
-            return sqlSelect;
-        }
-
-        public string GetSelectPaginationString()
-        {
-            var columns = _sqlQueryBuilderExtension.GetColumns();
-            var schemaName = _sqlQueryBuilderExtension.GetSchemaName();
-            var tableName = _sqlQueryBuilderExtension.GetTableNameFrom();
-            var joins = _sqlQueryBuilderExtension.GetJoins();
-            var where = _sqlQueryBuilderExtension.GetWhere();
-            var order = _sqlQueryBuilderExtension.GetOrder();
-            var grouping = _sqlQueryBuilderExtension.GetGrouping();
-            var having = _sqlQueryBuilderExtension.GetHaving();
-            var existsOrder = !String.IsNullOrEmpty(order);
-            var pageNumberUse = _pageNumber ?? 1;
-
-            if (!existsOrder)
-                throw new SqlBuilderException("To use pagination it is necessary to define 'ORDER BY'");
-
-            if (!_pageSize.HasValue)
-                throw new SqlBuilderException("It is necessary to define pagination size");
-
-            var sqlSelect = _sqlAdapter.GetSelectPaginationString(columns, schemaName, tableName, _tableNameAliasOverride, joins, where, order, grouping, having, _pageSize.Value, pageNumberUse, _formatting);
-
-            return sqlSelect;
-        }
-
         public void AddGroupBy(string tableName, string fieldName)
         {
             var columnName = _sqlAdapter.GetColumnName(tableName, fieldName);
@@ -210,8 +170,8 @@ namespace SqlBuilderFluent
 
         public void AddJoinByType(string originalTableName, string joinTableName, string leftField, string rightField, JoinType joinType, string tableAlias)
         {
-            var addTableNameAliasOverride = !String.IsNullOrEmpty(_tableNameAliasOverride);
-            var tableNameSource = addTableNameAliasOverride ? _tableNameAliasOverride : originalTableName;
+            var existsTableNameRealOverride = !String.IsNullOrEmpty(_tableNameRealOverride);
+            var tableNameSource = existsTableNameRealOverride ? _tableNameRealOverride : originalTableName;
             var tableNameToJoin = _sqlAdapter.GetTableName(joinTableName);
             var columnJoinLeft = _sqlAdapter.GetColumnName(tableNameSource, leftField);
             var existsTableAlias = !String.IsNullOrEmpty(tableAlias);
@@ -232,12 +192,10 @@ namespace SqlBuilderFluent
         public void AddOrderBy(string tableName, IList<string> columnsName, bool descending, string tableAlias)
         {
             var tableNameToUse = _sqlQueryBuilderExtension.GetTableNameUseConsideringAlias(tableName, tableAlias);
-            var sizeColumnsToOderBy = columnsName.Count;
 
-            for (int i = 0; i < sizeColumnsToOderBy; i++)
+            foreach (var columnNameItem in columnsName)
             {
-                var columnName = columnsName[i];
-                var columnNameWithConvention = _sqlAdapter.GetColumnName(tableNameToUse, columnName);
+                var columnNameWithConvention = _sqlAdapter.GetColumnName(tableNameToUse, columnNameItem);
 
                 _sqlQueryBuilderExtension.AddOrderBy(columnNameWithConvention, descending);
             }
@@ -275,14 +233,54 @@ namespace SqlBuilderFluent
             return parameters;
         }
 
+        public string GetSelectString()
+        {
+            var columns = _sqlQueryBuilderExtension.GetColumns();
+            var schemaName = _sqlQueryBuilderExtension.GetSchemaName();
+            var tableName = _sqlQueryBuilderExtension.GetTableNameFrom();
+            var joins = _sqlQueryBuilderExtension.GetJoins();
+            var where = _sqlQueryBuilderExtension.GetWhere();
+            var order = _sqlQueryBuilderExtension.GetOrder();
+            var grouping = _sqlQueryBuilderExtension.GetGrouping();
+            var having = _sqlQueryBuilderExtension.GetHaving();
+
+            var sqlSelect = _sqlAdapter.GetSelectString(columns, _limit, schemaName, tableName, _tableNameRealOverride, joins, where, order, grouping, having, _formatting);
+
+            return sqlSelect;
+        }
+
+        public string GetSelectPaginationString()
+        {
+            var columns = _sqlQueryBuilderExtension.GetColumns();
+            var schemaName = _sqlQueryBuilderExtension.GetSchemaName();
+            var tableName = _sqlQueryBuilderExtension.GetTableNameFrom();
+            var joins = _sqlQueryBuilderExtension.GetJoins();
+            var where = _sqlQueryBuilderExtension.GetWhere();
+            var order = _sqlQueryBuilderExtension.GetOrder();
+            var grouping = _sqlQueryBuilderExtension.GetGrouping();
+            var having = _sqlQueryBuilderExtension.GetHaving();
+            var existsOrder = !String.IsNullOrEmpty(order);
+            var pageNumberUse = _pageNumber ?? 1;
+
+            if (!existsOrder)
+                throw new SqlBuilderException("To use pagination it is necessary to define 'ORDER BY'");
+
+            if (!_pageSize.HasValue)
+                throw new SqlBuilderException("It is necessary to define pagination size");
+
+            var sqlSelect = _sqlAdapter.GetSelectPaginationString(columns, schemaName, tableName, _tableNameRealOverride, joins, where, order, grouping, having, _pageSize.Value, pageNumberUse, _formatting);
+
+            return sqlSelect;
+        }
+
         public void DefineSqlQueryBuilderExtension(Type typeTable)
         {
-            _sqlQueryBuilderExtension = new SqlQueryBuilderExtension(_sqlAdapter, _formatting, typeTable, _tableNameAliasOverride, _parameters);
+            _sqlQueryBuilderExtension = new SqlQueryBuilderExtension(_sqlAdapter, _formatting, typeTable, _tableNameRealOverride, _parameters);
         }
 
         public void DefineTableNameAliasOverride(string tableAlias)
         {
-            _tableNameAliasOverride = tableAlias;
+            _tableNameRealOverride = tableAlias;
         }
 
         public void DefineLimit(int limit)
