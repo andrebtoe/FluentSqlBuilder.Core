@@ -3,10 +3,19 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <Description>Package to generate SQL queries. Group by, COUNT, AVG, MAX, MIN, ORDER BY, and more.
+
+This package is only responsible for generating the select command, it does not intermediate the execution of the query.
+
+This package is only responsible for generating the select command, it does not intermediate the execution of the query.</Description>
+    <Version>1.0.1</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/andrebtoe/FluentSqlBuilder</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FluentSqlBuilder.Core\FluentSqlBuilder.Core.csproj" />
+    <ProjectReference Include="..\FluentSqlBuilder.DataModel\FluentSqlBuilder.DataModel.csproj" />
   </ItemGroup>
 
 </Project>

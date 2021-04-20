@@ -15,6 +15,10 @@ using System.Linq.Expressions;
 
 namespace SqlBuilderFluent
 {
+    /// <summary>
+    /// Class to generate sql select with fluent.
+    /// </summary>
+    /// <typeparam name="TTable">Table type referenced by generic type.</typeparam>
     public class FluentSqlBuilder<TTable> : BaseFluentSqlBuilder
     {
         internal LambdaResolver _resolver;
@@ -104,7 +108,7 @@ namespace SqlBuilderFluent
         /// <returns>Returns the instance of FluentSqlBuilder<TTable>. Corresponds to the root instance</returns>
         public FluentSqlBuilder<TTable> Distinct(Expression<Func<TTable, object>> columnExp, string tableAlias = null, string columnAlias = null)
         {
-            _resolver.SelectWithFunction(columnExp, SelectFunction.DISTINCT, tableAlias, columnAlias);
+            _resolver.SelectWithFunction(columnExp, SelectFunction.Distinct, tableAlias, columnAlias);
 
             return this;
         }
@@ -119,7 +123,7 @@ namespace SqlBuilderFluent
         /// <returns>Returns the instance of FluentSqlBuilder<TTable>. Corresponds to the root instance</returns>
         public FluentSqlBuilder<TTable> Distinct<TDistinct>(Expression<Func<TDistinct, object>> columnExp, string tableAlias = null, string columnAlias = null)
         {
-            _resolver.SelectWithFunction(columnExp, SelectFunction.DISTINCT, tableAlias, columnAlias);
+            _resolver.SelectWithFunction(columnExp, SelectFunction.Distinct, tableAlias, columnAlias);
 
             return this;
         }
@@ -405,7 +409,7 @@ namespace SqlBuilderFluent
         /// <returns>Returns the instance of FluentSqlBuilder<TTable>. Corresponds to the root instance.</returns>
         public FluentSqlBuilder<TTable> Count()
         {
-            _resolver.SelectWithFunctionWithoutColumn<TTable>(SelectFunction.COUNT, null, null);
+            _resolver.SelectWithFunctionWithoutColumn<TTable>(SelectFunction.Count, null, null);
 
             return this;
         }
@@ -418,7 +422,7 @@ namespace SqlBuilderFluent
         /// <returns>Returns the instance of FluentSqlBuilder<TTable>. Corresponds to the root instance.</returns>
         public FluentSqlBuilder<TTable> Count(string tableAlias = null, string columnAlias = null)
         {
-            _resolver.SelectWithFunctionWithoutColumn<TTable>(SelectFunction.COUNT, tableAlias, columnAlias);
+            _resolver.SelectWithFunctionWithoutColumn<TTable>(SelectFunction.Count, tableAlias, columnAlias);
 
             return this;
         }
@@ -433,7 +437,7 @@ namespace SqlBuilderFluent
         /// <returns>Returns the instance of FluentSqlBuilder<TTable>. Corresponds to the root instance.</returns>
         public FluentSqlBuilder<TTable> Count<TCount>(Expression<Func<TCount, object>> columnExp, string tableAlias = null, string columnAlias = null)
         {
-            _resolver.SelectWithFunction(columnExp, SelectFunction.COUNT, tableAlias, columnAlias);
+            _resolver.SelectWithFunction(columnExp, SelectFunction.Count, tableAlias, columnAlias);
 
             return this;
         }
@@ -447,7 +451,7 @@ namespace SqlBuilderFluent
         /// <returns>Returns the instance of FluentSqlBuilder<TTable>. Corresponds to the root instance.</returns>
         public FluentSqlBuilder<TTable> Count(Expression<Func<TTable, object>> columnExp, string tableAlias = null, string columnAlias = null)
         {
-            _resolver.SelectWithFunction(columnExp, SelectFunction.COUNT, tableAlias, columnAlias);
+            _resolver.SelectWithFunction(columnExp, SelectFunction.Count, tableAlias, columnAlias);
 
             return this;
         }
@@ -465,7 +469,7 @@ namespace SqlBuilderFluent
         /// <returns>Returns the instance of FluentSqlBuilder<TTable>. Corresponds to the root instance.</returns>
         public FluentSqlBuilder<TTable> Sum(Expression<Func<TTable, object>> columnExp, string tableAlias = null, string columnAlias = null)
         {
-            _resolver.SelectWithFunction(columnExp, SelectFunction.SUM, tableAlias, columnAlias);
+            _resolver.SelectWithFunction(columnExp, SelectFunction.Sum, tableAlias, columnAlias);
 
             return this;
         }
@@ -480,7 +484,7 @@ namespace SqlBuilderFluent
         /// <returns>Returns the instance of FluentSqlBuilder<TTable>. Corresponds to the root instance.</returns>
         public FluentSqlBuilder<TTable> Sum<TSum>(Expression<Func<TSum, object>> columnExp, string tableAlias = null, string columnAlias = null)
         {
-            _resolver.SelectWithFunction(columnExp, SelectFunction.SUM, tableAlias, columnAlias);
+            _resolver.SelectWithFunction(columnExp, SelectFunction.Sum, tableAlias, columnAlias);
 
             return this;
         }
@@ -498,7 +502,7 @@ namespace SqlBuilderFluent
         /// <returns>Returns the instance of FluentSqlBuilder<TTable>. Corresponds to the root instance.</returns>
         public FluentSqlBuilder<TTable> Max(Expression<Func<TTable, object>> columnExp, string tableAlias = null, string columnAlias = null)
         {
-            _resolver.SelectWithFunction(columnExp, SelectFunction.MAX, tableAlias, columnAlias);
+            _resolver.SelectWithFunction(columnExp, SelectFunction.Max, tableAlias, columnAlias);
 
             return this;
         }
@@ -514,7 +518,7 @@ namespace SqlBuilderFluent
         /// <returns>Returns the instance of FluentSqlBuilder<TTable>. Corresponds to the root instance.</returns>
         public FluentSqlBuilder<TTable> Max<TMax>(Expression<Func<TMax, object>> columnExp, string tableAlias = null, string columnAlias = null)
         {
-            _resolver.SelectWithFunction(columnExp, SelectFunction.MAX, tableAlias, columnAlias);
+            _resolver.SelectWithFunction(columnExp, SelectFunction.Max, tableAlias, columnAlias);
 
             return this;
         }
@@ -532,7 +536,7 @@ namespace SqlBuilderFluent
         /// <returns>Returns the instance of FluentSqlBuilder<TTable>. Corresponds to the root instance.</returns>
         public FluentSqlBuilder<TTable> Min(Expression<Func<TTable, object>> columnExp, string tableAlias = null, string columnAlias = null)
         {
-            _resolver.SelectWithFunction(columnExp, SelectFunction.MIN, tableAlias, columnAlias);
+            _resolver.SelectWithFunction(columnExp, SelectFunction.Min, tableAlias, columnAlias);
 
             return this;
         }
@@ -547,7 +551,7 @@ namespace SqlBuilderFluent
         /// <returns>Returns the instance of FluentSqlBuilder<TTable>. Corresponds to the root instance.</returns>
         public FluentSqlBuilder<TTable> Min<TMin>(Expression<Func<TMin, object>> columnExp, string tableAlias = null, string columnAlias = null)
         {
-            _resolver.SelectWithFunction(columnExp, SelectFunction.MIN, tableAlias, columnAlias);
+            _resolver.SelectWithFunction(columnExp, SelectFunction.Min, tableAlias, columnAlias);
 
             return this;
         }
@@ -565,7 +569,7 @@ namespace SqlBuilderFluent
         /// <returns>Returns the instance of FluentSqlBuilder<TTable>. Corresponds to the root instance.</returns>
         public FluentSqlBuilder<TTable> Avg(Expression<Func<TTable, object>> columnExp, string tableAlias = null, string columnAlias = null)
         {
-            _resolver.SelectWithFunction(columnExp, SelectFunction.AVG, tableAlias, columnAlias);
+            _resolver.SelectWithFunction(columnExp, SelectFunction.Avg, tableAlias, columnAlias);
 
             return this;
         }
@@ -580,7 +584,7 @@ namespace SqlBuilderFluent
         /// <returns>Returns the instance of FluentSqlBuilder<TTable>. Corresponds to the root instance.</returns>
         public FluentSqlBuilder<TTable> Avg<TAvg>(Expression<Func<TAvg, object>> columnExp, string tableAlias = null, string columnAlias = null)
         {
-            _resolver.SelectWithFunction(columnExp, SelectFunction.AVG, tableAlias, columnAlias);
+            _resolver.SelectWithFunction(columnExp, SelectFunction.Avg, tableAlias, columnAlias);
 
             return this;
         }

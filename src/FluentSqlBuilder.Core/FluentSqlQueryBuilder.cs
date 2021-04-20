@@ -218,7 +218,7 @@ namespace SqlBuilderFluent
             var existsAlias = !String.IsNullOrEmpty(columnAlias);
             var tableNameToUse = String.IsNullOrEmpty(tableAlias) ? tableName : tableAlias;
             var columnNameToUserFunction = functionNoHasColumnName ? _sqlAdapter.GetColumnName(tableNameToUse, columnName) : "1";
-            var functionClause = new StringBuilder($"{functionName}({columnNameToUserFunction}) ");
+            var functionClause = new StringBuilder($"{functionName.ToUpper()}({columnNameToUserFunction}) ");
 
             if (existsAlias)
                 functionClause.Append($"AS {columnAlias} ");

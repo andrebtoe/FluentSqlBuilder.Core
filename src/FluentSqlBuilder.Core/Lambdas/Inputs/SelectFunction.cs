@@ -2,11 +2,11 @@
 {
     public enum SelectFunction
     {
-        COUNT = 1,
-        DISTINCT = 2,
-        SUM = 3,
-        MIN = 4,
-        MAX = 5,
-        AVG = 6
+        Count = 1,
+        Distinct = 2,
+        Sum = 3,
+        Min = 4,
+        Max = 5,
+        Avg = 6
     }
 }
