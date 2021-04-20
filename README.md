@@ -43,7 +43,7 @@ FROM [checkout].[order]
 
 ## Select with INNER JOIN
 ```csharp
-var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                      .InnerJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id);
 ```
 output
@@ -57,7 +57,7 @@ INNER JOIN [customer] ON ([order].[customer_id] = [customer].[Id])
 
 ## Select with LEFT JOIN
 ```csharp
-var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                      .LeftJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id);
 ```
 output
@@ -71,7 +71,7 @@ LEFT JOIN [customer] ON ([order].[customer_id] = [customer].[Id])
 
 ## Select with RIGHT JOIN
 ```csharp
-var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                     .RightJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id);
 ```
 output
@@ -85,7 +85,7 @@ RIGHT JOIN [customer] ON ([order].[customer_id] = [customer].[Id])
 
 ## Select with WHERE simple
 ```csharp
-var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                      .Where(x => x.Status == OrderStatus.Paid && x.CustomerId == 1);
 ```
 output
@@ -99,7 +99,7 @@ AND [order].[customer_id] = @Param2)
 
 ## Select with WHERE simple and INNER JOIN
 ```csharp
-var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                      .Where(x => x.Status == OrderStatus.Paid && x.CustomerId == 1);
 ```
 output
@@ -116,7 +116,7 @@ AND [customer].[Type] = @Param3
 
 ## Select with ORDER BY ASC
 ```csharp
-var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                      .OrderBy(x => x.CustomerId);
 ```
 output
@@ -130,7 +130,7 @@ ORDER BY [order].[customer_id] ASC
 
 ## Select with ORDER BY DESC
 ```csharp
-var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                  .OrderByDescending(x => x.CustomerId);
 ```
 output
@@ -143,7 +143,7 @@ FROM [checkout].[order] ORDER BY [order].[customer_id] DESC
 
 ## Select with MIN AND GROUP BY
 ```csharp
-var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                      .Min(x => x.CustomerId)
                      .GroupBy(x => x.CustomerId);
 ```
@@ -156,7 +156,7 @@ GROUP BY [order].[customer_id]
 
 ## Select with GROUP BY and HAVING
 ```csharp
-var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                      .Min(x => x.CustomerId)
                      .GroupBy(x => x.CustomerId);
 ```
@@ -170,7 +170,7 @@ HAVING MIN([order].[customer_id]) > @Param1
 
 ## Select with GROUP BY and HAVING
 ```csharp
-var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                     .Projection(x => new { x.Id, x.Status });
 ```
 output
@@ -182,7 +182,7 @@ FROM [checkout].[order]
 
 ## Select with Limit
 ```csharp
-var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                      .Limit(10);
 ```
 output
@@ -195,7 +195,7 @@ FROM [checkout].[order]
 
 ## Select with Pagination
 ```csharp
-var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                      .Limit(10);
 ```
 output
@@ -210,7 +210,7 @@ OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY
 
 ## Select with alias
 ```csharp
-var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault, "order_alias");
+var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented, "order_alias");
 ```
 output
 ~~~~sql
@@ -222,7 +222,7 @@ FROM [checkout].[order_alias] AS order_alias
 
 ## Select with Projection, WHERE, INNER JOIN ORDER BY and Lmit
 ```csharp
-var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault, "order_alias");
+var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented, "order_alias");
 ```
 output
 ~~~~sql
