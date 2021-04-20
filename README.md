@@ -1,8 +1,10 @@
-## FluentSqlBuilder
+## FluentSqlBuilder.Core
 
 Package to generate SQL queries. Group by, COUNT, AVG, MAX, MIN, ORDER BY, and more.
 This package is only responsible for generating the select command, it does not intermediate the execution of the query.
 The idea is not to replace an ORM framework, just to support applications that cannot use
+
+Package on nuget: [FluentSqlBuilder.Core](https://www.nuget.org/packages/FluentSqlBuilder.Core/).
 
 For the examples consider the classes below
 
