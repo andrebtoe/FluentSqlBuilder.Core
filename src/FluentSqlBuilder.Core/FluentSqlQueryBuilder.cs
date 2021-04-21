@@ -168,10 +168,11 @@ namespace SqlBuilderFluent
             _sqlQueryBuilderExtension.AddProjectionColumns(columnName);
         }
 
-        public void AddJoinByType(string originalTableName, string joinTableName, string leftField, string rightField, JoinType joinType, string tableAlias)
+        public void AddJoinByType(string tableSchemaName, string originalTableName, string joinTableName, string leftField, string rightField, JoinType joinType, string tableAlias)
         {
             var existsTableNameRealOverride = !String.IsNullOrEmpty(_tableNameRealOverride);
             var tableNameSource = existsTableNameRealOverride ? _tableNameRealOverride : originalTableName;
+            var tableSchemaNameToUse = _sqlAdapter.GetSchemaName(tableSchemaName);
             var tableNameToJoin = _sqlAdapter.GetTableName(joinTableName);
             var columnJoinLeft = _sqlAdapter.GetColumnName(tableNameSource, leftField);
             var existsTableAlias = !String.IsNullOrEmpty(tableAlias);
@@ -179,7 +180,7 @@ namespace SqlBuilderFluent
             var columnJoinRight = _sqlAdapter.GetColumnName(joinTableNameToUse, rightField);
             var typeJoinNormalized = joinType.ToString().ToUpper();
             var charToUse = _formatting == SqlBuilderFormatting.Indented ? "\n" : "";
-            var joinClause = new StringBuilder($"{charToUse}{typeJoinNormalized} JOIN {tableNameToJoin} ");
+            var joinClause = new StringBuilder($"{charToUse}{typeJoinNormalized} JOIN {tableSchemaNameToUse}.{tableNameToJoin} ");
 
             if (existsTableAlias)
                 joinClause.Append($"AS {tableAlias} ");
