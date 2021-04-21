@@ -26,5 +26,11 @@ namespace FluentSqlBuilder.Test.Unit
             Assert.True(sqlSelect.Contains($"[{tableName}].[customer_id]"), $"Column not found");
             Assert.True(sqlSelect.Contains($"[{tableName}].[Status]"), $"Column not found");
         }
+
+        [Fact]
+        public void T()
+        {
+            Assert.True(false, $"TEST INVALID!!!");
+        }
     }
 }
