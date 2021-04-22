@@ -82,8 +82,11 @@ namespace SqlBuilderFluent.Playground
                         case 16:
                             select = SelectWithFull16();
                             break;
-                        default:
+                        case 17:
+                            select = SelectWithDistinct17();
                             break;
+                        default:
+                            throw new ArgumentException("Number invalid");
                     }
 
                     Console.WriteLine("\n\n----------- START -----------\n\n ");
@@ -153,6 +156,7 @@ namespace SqlBuilderFluent.Playground
             printItem("14 - Select with Pagination", menuItemSelected == 14);
             printItem("15 - Select with alias", menuItemSelected == 15);
             printItem("16 - Select with Projection, WHERE, INNER JOIN ORDER BY and Lmit", menuItemSelected == 16);
+            printItem("17 - Select with DISTINT", menuItemSelected == 17);
         }
 
         private static string SelectSimple01()
@@ -335,6 +339,17 @@ namespace SqlBuilderFluent.Playground
                                    .InnerJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id, "customer_alias")
                                    .OrderBy(x => x.Id)
                                    .Limit(10);
+
+            var parameters = sqlBuilder.GetParameters();
+            var sqlSelect = sqlBuilder.ToString();
+
+            return sqlSelect;
+        }
+
+        private static string SelectWithDistinct17()
+        {
+            var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+                                 .Distinct(x => x.CustomerId);
 
             var parameters = sqlBuilder.GetParameters();
             var sqlSelect = sqlBuilder.ToString();
