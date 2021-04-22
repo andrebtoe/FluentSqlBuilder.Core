@@ -42,14 +42,14 @@ namespace FluentSqlBuilder.Test.Unit
             Assert.True(sqlSelectWithoutAlias.Contains($"SELECT"), $"SELECT invalid");
             Assert.True(sqlSelectWithoutAlias.Contains($"FROM [checkout].[{tableName}]"), $"FROM invalid");
             Assert.True(sqlSelectWithoutAlias.Contains($"[{tableName}].[Id]"), $"Column not found");
-            Assert.True(sqlSelectWithoutAlias.Contains($"[{tableName}].[customer_id]"), $"Column not found");
+            Assert.True(sqlSelectWithoutAlias.Contains($"[{tableName}].[customer_id] AS CustomerId"), $"Column not found");
             Assert.True(sqlSelectWithoutAlias.Contains($"[{tableName}].[Status]"), $"Column not found");
             Assert.True(sqlSelectWithoutAlias.Contains($"ORDER BY [{tableName}].[customer_id] {orderByDescription}"), $"Column not found");
 
             Assert.True(sqlSelectAlias.Contains($"SELECT"), $"SELECT invalid");
             Assert.True(sqlSelectAlias.Contains($"FROM [checkout].[{tableName}] AS {tableNameAlias}"), $"FROM invalid");
             Assert.True(sqlSelectAlias.Contains($"[{tableNameAlias}].[Id]"), $"Column not found");
-            Assert.True(sqlSelectAlias.Contains($"[{tableNameAlias}].[customer_id]"), $"Column not found");
+            Assert.True(sqlSelectAlias.Contains($"[{tableNameAlias}].[customer_id] AS CustomerId"), $"Column not found");
             Assert.True(sqlSelectAlias.Contains($"[{tableNameAlias}].[Status]"), $"Column not found");
             Assert.True(sqlSelectAlias.Contains($"ORDER BY [{tableNameAlias}].[customer_id] {orderByDescription}"), $"Column not found");
         }

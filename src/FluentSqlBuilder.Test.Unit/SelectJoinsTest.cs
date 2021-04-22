@@ -26,7 +26,7 @@ namespace FluentSqlBuilder.Test.Unit
             // Assert
             Assert.True(sqlSelect.Contains($"FROM [{tableSchemaName}].[{tableNameSource}]"), $"FROM invalid");
             Assert.True(sqlSelect.Contains($"[{tableNameSource}].[Id]"), $"Column not found");
-            Assert.True(sqlSelect.Contains($"[{tableNameSource}].[customer_id]"), $"Column not found");
+            Assert.True(sqlSelect.Contains($"[{tableNameSource}].[customer_id] AS CustomerId"), $"Column not found");
             Assert.True(sqlSelect.Contains($"[{tableNameSource}].[Status]"), $"Column not found");
             Assert.True(sqlSelect.Contains($"INNER JOIN [{tableSchemaName}].[{tableNameTarget}] ON ([{tableNameSource}].[customer_id] = [{tableNameTarget}].[Id])"), $"INNER JOIN invalid");
         }
@@ -48,7 +48,7 @@ namespace FluentSqlBuilder.Test.Unit
             // Assert
             Assert.True(sqlSelect.Contains($"FROM [{tableSchemaName}].[{tableNameSource}]"), $"FROM invalid");
             Assert.True(sqlSelect.Contains($"[{tableNameSource}].[Id]"), $"Column not found");
-            Assert.True(sqlSelect.Contains($"[{tableNameSource}].[customer_id]"), $"Column not found");
+            Assert.True(sqlSelect.Contains($"[{tableNameSource}].[customer_id] AS CustomerId"), $"Column not found");
             Assert.True(sqlSelect.Contains($"[{tableNameSource}].[Status]"), $"Column not found");
             Assert.True(sqlSelect.Contains($"INNER JOIN [{tableSchemaName}].[{tableNameTarget}] AS {tableNameTargetAlias} ON ([{tableNameSource}].[customer_id] = [{tableNameTargetAlias}].[Id])"), $"INNER JOIN invalid");
         }

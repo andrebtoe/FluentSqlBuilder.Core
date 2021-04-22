@@ -23,7 +23,7 @@ namespace FluentSqlBuilder.Test.Unit
             // Assert
             Assert.True(sqlSelect.Contains($"FROM [checkout].[{tableName}]"), $"FROM invalid");
             Assert.True(sqlSelect.Contains($"[{tableName}].[Id]"), $"Column not found");
-            Assert.True(sqlSelect.Contains($"[{tableName}].[customer_id]"), $"Column not found");
+            Assert.True(sqlSelect.Contains($"[{tableName}].[customer_id] AS CustomerId"), $"Column not found");
             Assert.True(sqlSelect.Contains($"[{tableName}].[Status]"), $"Column not found");
         }
 
@@ -41,7 +41,7 @@ namespace FluentSqlBuilder.Test.Unit
             // Assert
             Assert.True(sqlSelect.Contains($"FROM [checkout].[{tableName}] AS {tableNameAlias}"), $"FROM invalid");
             Assert.True(sqlSelect.Contains($"[{tableNameAlias}].[Id]"), $"Column not found");
-            Assert.True(sqlSelect.Contains($"[{tableNameAlias}].[customer_id]"), $"Column not found");
+            Assert.True(sqlSelect.Contains($"[{tableNameAlias}].[customer_id] AS CustomerId"), $"Column not found");
             Assert.True(sqlSelect.Contains($"[{tableNameAlias}].[Status]"), $"Column not found");
         }
     }
