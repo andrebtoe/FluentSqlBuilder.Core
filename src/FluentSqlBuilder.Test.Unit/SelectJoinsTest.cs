@@ -82,6 +82,7 @@ namespace FluentSqlBuilder.Test.Unit
             var tableNameSource = "order";
             var tableNameTarget = "customer";
             var tableNameTargetAlias = "customer_alias";
+
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
                                  .LeftJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id, tableNameTargetAlias);
 
