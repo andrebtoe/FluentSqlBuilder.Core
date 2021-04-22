@@ -5,7 +5,7 @@ using Xunit;
 
 namespace FluentSqlBuilder.Test.Unit
 {
-    public class WhereSimpleTest
+    public class SelectWhereSimpleTest
     {
         private static SqlAdapterType _typeDefault = SqlAdapterType.SqlServer2019;
         private static SqlBuilderFormatting _formattingDefault = SqlBuilderFormatting.Indented;
