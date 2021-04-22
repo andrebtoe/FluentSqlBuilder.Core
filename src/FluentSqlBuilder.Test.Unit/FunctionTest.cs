@@ -81,35 +81,36 @@ namespace FluentSqlBuilder.Test.Unit
         private void TestFunctionSelect(SqlAdapterType sqlAdapterType, SqlBuilderFormatting formatting, SelectFunction selectFunction)
         {
             // Arrange
-            var tableNameAlis = "order_alias";
-            var columnNameAlis = "Quantity";
+            var tableName = "order";
+            var tableNameAlias = "order_alias";
+            var columnNameAlias = "Quantity";
             var functionName = selectFunction.ToString().ToUpper();
             var fluentSqlBuilderWithoutAlias = new FluentSqlBuilder<OrderDataModel>(sqlAdapterType, formatting)
                                                .GroupBy(x => x.CustomerId)
                                                .Having(selectFunction, x => x.CustomerId >= 1);
 
-            var fluentSqlBuilderWithAlias = new FluentSqlBuilder<OrderDataModel>(sqlAdapterType, formatting, tableNameAlis)
-                                                .GroupBy(tableNameAlis, x => x.CustomerId)
-                                                .Having(selectFunction, x => x.CustomerId >= 0, tableNameAlis);
+            var fluentSqlBuilderWithAlias = new FluentSqlBuilder<OrderDataModel>(sqlAdapterType, formatting, tableNameAlias)
+                                                .GroupBy(tableNameAlias, x => x.CustomerId)
+                                                .Having(selectFunction, x => x.CustomerId >= 0, tableNameAlias);
 
 
             AddFunctionByRef(fluentSqlBuilderWithoutAlias, selectFunction);
-            AddFunctionByRef(fluentSqlBuilderWithAlias, selectFunction, tableNameAlis, columnNameAlis);
+            AddFunctionByRef(fluentSqlBuilderWithAlias, selectFunction, tableNameAlias, columnNameAlias);
 
             // Act
             var sqlSelectWithoutAlias = fluentSqlBuilderWithoutAlias.ToString();
             var sqlSelectWithAlias = fluentSqlBuilderWithAlias.ToString();
 
             // Assert
-            Assert.True(sqlSelectWithoutAlias.Contains($"{functionName}([order].[customer_id])"), $"'${functionName}' expected clause => {sqlAdapterType}:{formatting}");
-            Assert.True(sqlSelectWithoutAlias.Contains("FROM [checkout].[order]"), $"'FROM' expected clause => {sqlAdapterType}:{formatting}");
-            Assert.True(sqlSelectWithoutAlias.Contains("GROUP BY [order].[customer_id]"), $"'GROUP BY' expected clause => {sqlAdapterType}:{formatting}");
+            Assert.True(sqlSelectWithoutAlias.Contains($"{functionName}([{tableName}].[customer_id])"), $"'${functionName}' expected clause => {sqlAdapterType}:{formatting}");
+            Assert.True(sqlSelectWithoutAlias.Contains($"FROM [checkout].[{tableName}]"), $"'FROM' expected clause => {sqlAdapterType}:{formatting}");
+            Assert.True(sqlSelectWithoutAlias.Contains($"GROUP BY [{tableName}].[customer_id]"), $"'GROUP BY' expected clause => {sqlAdapterType}:{formatting}");
             Assert.True(sqlSelectWithoutAlias.Contains($"HAVING {functionName}([order].[customer_id]) >= @Param1"), $"'HAVING' expected clause => {sqlAdapterType}:{formatting}");
 
-            Assert.True(sqlSelectWithAlias.Contains($"{functionName}([{tableNameAlis}].[customer_id]) AS {columnNameAlis}"), $"'{functionName}' expected clause => {sqlAdapterType}:{formatting}");
-            Assert.True(sqlSelectWithAlias.Contains($"FROM [checkout].[{tableNameAlis}] AS order_alias"), $"'FROM' expected clause => {sqlAdapterType}:{formatting}");
-            Assert.True(sqlSelectWithAlias.Contains($"GROUP BY [{tableNameAlis}].[customer_id]"), $"'GROUP BY' expected clause => {sqlAdapterType}:{formatting}");
-            Assert.True(sqlSelectWithAlias.Contains($"HAVING {functionName}([{tableNameAlis}].[customer_id]) >= @Param1"), $"'HAVING' expected clause => {sqlAdapterType}:{formatting}");
+            Assert.True(sqlSelectWithAlias.Contains($"{functionName}([{tableNameAlias}].[customer_id]) AS {columnNameAlias}"), $"'{functionName}' expected clause => {sqlAdapterType}:{formatting}");
+            Assert.True(sqlSelectWithAlias.Contains($"FROM [checkout].[{tableName}] AS {tableNameAlias}"), $"'FROM' expected clause => {sqlAdapterType}:{formatting}");
+            Assert.True(sqlSelectWithAlias.Contains($"GROUP BY [{tableNameAlias}].[customer_id]"), $"'GROUP BY' expected clause => {sqlAdapterType}:{formatting}");
+            Assert.True(sqlSelectWithAlias.Contains($"HAVING {functionName}([{tableNameAlias}].[customer_id]) >= @Param1"), $"'HAVING' expected clause => {sqlAdapterType}:{formatting}");
         }
 
         private void AddFunctionByRef<TTable>(FluentSqlBuilder<TTable> fluentSqlBuilder, SelectFunction selectFunction, string tableAlias = null, string columnAlias = null)
