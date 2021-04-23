@@ -220,7 +220,7 @@ SELECT [order_alias].[Id],
 FROM [checkout].[order_alias] AS order_alias
 ~~~~
 
-## Select with Projection, WHERE, INNER JOIN ORDER BY and Lmit
+## Select with Projection, WHERE, INNER JOIN ORDER BY and Limit
 ```csharp
 var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented, "order_alias");
 ```

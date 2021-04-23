@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FluentSqlBuilder.DataModel
+namespace FluentSqlBuilder.Data.DataModel
 {
-    [Table("order_item", Schema = "checkout")]
+    [Table("Order_Item", Schema = "Checkout")]
     public class OrderItemDataModel
     {
+        public int Id { get; set; }
         public int Quantity { get; set; }
         [Column("order_id")]
         public int OrderId { get; set; }

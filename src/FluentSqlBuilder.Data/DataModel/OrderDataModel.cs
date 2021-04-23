@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FluentSqlBuilder.DataModel
+namespace FluentSqlBuilder.Data.DataModel
 {
-    [Table("order", Schema = "checkout")]
+    [Table("Order", Schema = "Checkout")]
     public class OrderDataModel
     {
         public int Id { get; set; }

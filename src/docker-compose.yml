@@ -1,0 +1,30 @@
+version: '3.4'
+
+networks: 
+    dev-network:
+      driver: bridge
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    environment: 
+      - SA_PASSWORD=b6WTRgh6
+      - ACCEPT_EULA=Y
+    volumes:
+     - ./data/mssql:/scripts/
+    ports:
+      - "1434:1433"
+    networks:
+      - dev-network
+    command:
+      - /bin/bash
+      - -c 
+      - |
+        /opt/mssql/bin/sqlservr &
+        sleep 30
+        
+        for fileItem in /scripts/*.sql
+          do /opt/mssql-tools/bin/sqlcmd -U sa -P $$SA_PASSWORD -l 30 -e -i $$fileItem
+        done
+        
+        sleep infinity

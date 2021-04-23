@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FluentSqlBuilder.Core\FluentSqlBuilder.Core.csproj" />
-    <ProjectReference Include="..\FluentSqlBuilder.DataModel\FluentSqlBuilder.DataModel.csproj" />
+    <ProjectReference Include="..\FluentSqlBuilder.Data\FluentSqlBuilder.Data.csproj" />
   </ItemGroup>
 
 </Project>
