@@ -18,3 +18,15 @@ src/FluentSqlBuilder.Playground/bin/Debug/net5.0/
 src/FluentSqlBuilder.DataModel/bin/Debug/net5.0/
 
 src/FluentSqlBuilder.Playground/bin/Debug/
+
+src/FluentSqlBuilder.Data/bin/Debug/net5.0/
+
+src/FluentSqlBuilder.Data/obj/Debug/net5.0/
+
+src/FluentSqlBuilder.Data/obj/
+
+src/FluentSqlBuilder.Playground/Properties/
+
+src/obj/Debug/
+
+src/obj/Docker/

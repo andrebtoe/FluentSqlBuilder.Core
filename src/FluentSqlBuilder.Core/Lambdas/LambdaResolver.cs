@@ -82,21 +82,21 @@ namespace SqlBuilderFluent.Lambdas
             _sqlQueryBuilder.DefinePageNumber(pageNumber);
         }
 
-        public void Select<TTable>(Expression<Func<TTable, object>> expression, string tableAlias)
+        public void Select<TTableProjection>(Expression<Func<TTableProjection, object>> expression, string tableAlias, Type tableToProjection)
         {
             var expressionBody = expression.Body;
 
             switch (expressionBody.NodeType)
             {
                 case ExpressionType.Parameter:
-                    _lambdaResolverExtension.BuildSelectByParameter<TTable>(expressionBody, tableAlias);
+                    _lambdaResolverExtension.BuildSelectByParameter<TTableProjection>(expressionBody, tableAlias, tableToProjection);
                     break;
                 case ExpressionType.Convert:
                 case ExpressionType.MemberAccess:
-                    _lambdaResolverExtension.SelectByMemberAccess<TTable>(expressionBody, tableAlias);
+                    _lambdaResolverExtension.SelectByMemberAccess<TTableProjection>(expressionBody, tableAlias, tableToProjection);
                     break;
                 case ExpressionType.New:
-                    _lambdaResolverExtension.SelectByAnonymous<TTable>(expressionBody, tableAlias);
+                    _lambdaResolverExtension.SelectByAnonymous<TTableProjection>(expressionBody, tableAlias, tableToProjection);
                     break;
                 default:
                     throw new SqlBuilderException("Invalid expression");
