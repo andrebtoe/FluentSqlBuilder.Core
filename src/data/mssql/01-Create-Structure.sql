@@ -24,7 +24,8 @@ GO
 
 CREATE TABLE [Products].[Product] (
 	[Id] INT PRIMARY KEY IDENTITY(1, 1),
-	[Name] NVARCHAR(250) NOT NULL
+	[Name] NVARCHAR(250) NOT NULL,
+	[DateTime] DATETIME NOT NULL
 );
 
 GO
@@ -32,7 +33,8 @@ GO
 CREATE TABLE [Customers].[Customer] (
 	[Id] INT PRIMARY KEY IDENTITY(1, 1),
 	[Name] NVARCHAR(250) NOT NULL,
-	[Type] SMALLINT NOT NULL
+	[Type] SMALLINT NOT NULL,
+	[DateTime] DATETIME NOT NULL
 );
 
 GO
@@ -41,6 +43,7 @@ CREATE TABLE [Checkout].[Order] (
 	[Id] INT PRIMARY KEY IDENTITY(1, 1),
 	[Customer_id] INT NOT NULL,
 	[Status] SMALLINT NOT NULL,
+	[DateTime] DATETIME NOT NULL,
 	FOREIGN KEY (Customer_id) REFERENCES [Customers].[Customer](Id)
 );
 
@@ -51,6 +54,7 @@ CREATE TABLE [Checkout].[Order_Item] (
 	[Quantity] INT NOT NULL,
 	[Order_id] INT NOT NULL,
 	[Product_id] INT NOT NULL,
+	[DateTime] DATETIME NOT NULL,
 	FOREIGN KEY (Product_id) REFERENCES [Products].[Product](Id),
 	FOREIGN KEY (Order_id) REFERENCES [checkout].[Order](Id)
 );

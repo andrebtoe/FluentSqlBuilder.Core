@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FluentSqlBuilder.Data.DataModel
 {
@@ -8,6 +9,7 @@ namespace FluentSqlBuilder.Data.DataModel
         public int Id { get; set; }
         [Column("customer_id")]
         public int CustomerId { get; set; }
+        public DateTime DateTime { get; set; }
         public OrderStatus Status { get; set; }
     }
 }

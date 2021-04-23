@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FluentSqlBuilder.Data.DataModel
 {
@@ -11,5 +12,6 @@ namespace FluentSqlBuilder.Data.DataModel
         public int OrderId { get; set; }
         [Column("Product_id")]
         public int ProductId { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }

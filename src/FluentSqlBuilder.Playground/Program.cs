@@ -340,7 +340,7 @@ namespace SqlBuilderFluent.Playground
         {
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault, "order_alias")
                                    .Projection((orderDataModel) => new { orderDataModel.CustomerId }, "order_alias")
-                                   .Projection<CustomerDataModel>((customer) => customer, "customer_alias")
+                                   //.Projection<CustomerDataModel>((customer) => customer, "customer_alias")
                                    .Where(x => x.Status == OrderStatus.Paid && x.CustomerId == 1)
                                    .InnerJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id, "customer_alias")
                                    .OrderBy(x => x.Id)
