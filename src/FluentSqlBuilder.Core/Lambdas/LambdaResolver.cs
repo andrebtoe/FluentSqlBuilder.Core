@@ -46,12 +46,13 @@ namespace SqlBuilderFluent.Lambdas
             var joinExpression = LambdaResolverExtension.GetBinaryExpression(expression.Body);
             var leftMemberExpression = _lambdaResolverExtension.GetMemberExpression(joinExpression.Left);
             var rightMemberExpression = _lambdaResolverExtension.GetMemberExpression(joinExpression.Right);
+            var tableSchemaName = SqlBuilderFluentHelper.GetSchema(typeof(TTableLeft));
             var tableName = SqlBuilderFluentHelper.GetTableName<TTableLeft>();
             var tableNameToJoin = SqlBuilderFluentHelper.GetTableName<TTableRight>();
             var columnNameLeft = SqlBuilderFluentHelper.GetColumnName(leftMemberExpression);
             var columnNameRight = SqlBuilderFluentHelper.GetColumnName(rightMemberExpression);
 
-            _sqlQueryBuilder.AddJoinByType(tableName, tableNameToJoin, columnNameLeft, columnNameRight, joinType, tableAlias);
+            _sqlQueryBuilder.AddJoinByType(tableSchemaName, tableName, tableNameToJoin, columnNameLeft, columnNameRight, joinType, tableAlias);
         }
 
         public void AddOrderBy<TTable>(bool descending, string tableAlias, params Expression<Func<TTable, object>>[] expressions)

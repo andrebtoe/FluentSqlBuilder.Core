@@ -51,9 +51,7 @@ namespace SqlBuilderFluent.Core.Extensions
 
         public string GetTableNameFrom()
         {
-            var existsTableNameAliasOverrideToUse = !String.IsNullOrEmpty(_tableNameRealOverride);
-            var tableNameToUse = existsTableNameAliasOverrideToUse ? _tableNameRealOverride : _tableName;
-            var tableName = _sqlAdapter.GetTableName(tableNameToUse);
+            var tableName = _sqlAdapter.GetTableName(_tableName);
             var tableNameWithConvention = $"{tableName}";
 
             return tableNameWithConvention;
