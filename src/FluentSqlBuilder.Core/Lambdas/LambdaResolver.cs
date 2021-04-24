@@ -129,24 +129,71 @@ namespace SqlBuilderFluent.Lambdas
         {
             var expressionTree = GetExpressionTree(expression);
 
-            _lambdaResolverExtension.BuildSelect(expressionTree, tableAlias, targetClauseType, selectFunction);
+            _lambdaResolverExtension.BuildSelect(expressionTree.OperationNodeType, expressionTree, tableAlias, targetClauseType, selectFunction, expressionTree.OperationNodeResolveType);
         }
 
         public void AddHaving<TTable>(string tableAlias, Expression<Func<TTable, bool>> expressionFilter, TargetClauseType targetClauseType, SelectFunction selectFunction)
         {
             var expressionTree = GetExpressionTree(expressionFilter);
 
-            _lambdaResolverExtension.BuildSelect(expressionTree, tableAlias, targetClauseType, selectFunction);
+            _lambdaResolverExtension.BuildSelect(expressionTree.OperationNodeType, expressionTree, tableAlias, targetClauseType, selectFunction, expressionTree.OperationNodeResolveType);
+        }
+
+        private bool IsFunctionInWhere(Expression expression)
+        {
+            var memberExpression = expression as MemberExpression;
+
+            if (memberExpression == null)
+                return false;
+
+            var declaringType = ((MemberExpression)expression).Member.DeclaringType;
+            var isDataTime = declaringType == typeof(DateTime);
+
+            return isDataTime;
+        }
+
+        private OperationNodeResolveType? GetOperationNodeResolve(Expression expression, BinaryExpression binaryExpression)
+        {
+            var isFunctionInWhere = IsFunctionInWhere(expression);
+
+            if (!isFunctionInWhere)
+                return null;
+
+            var memberExpression = ((MemberExpression)expression).Member;
+            var declaringType = memberExpression.DeclaringType;
+            var isDataTime = declaringType == typeof(DateTime);
+
+            if (isDataTime)
+            {
+                OperationNodeResolveType? operationNodeResolveType = null;
+                var nameMemberDataTime = memberExpression.Name;
+
+                switch (nameMemberDataTime)
+                {
+                    case "Year":
+                        operationNodeResolveType = OperationNodeResolveType.DateTimeWithYear;
+                        break;
+                    default:
+                        throw new SqlBuilderException($"'{nameMemberDataTime}' not implemented for DateTime");
+                }
+
+                return operationNodeResolveType;
+            }
+
+            return null;
         }
 
         internal Node ResolveQuery(BinaryExpression binaryExpression)
         {
             var @operator = binaryExpression.NodeType;
+            var isFunctionInWhereLeft = IsFunctionInWhere(binaryExpression.Left);
+            var operationNodeResolve = GetOperationNodeResolve(binaryExpression.Left, binaryExpression);
+            var operationNodeType = !isFunctionInWhereLeft ? OperationNodeType.Common : OperationNodeType.ColumnWithFunction;
             dynamic binaryExpressionLeft = binaryExpression.Left;
             dynamic binaryExpressionRight = binaryExpression.Right;
             dynamic queryLeft = ResolveQuery(binaryExpressionLeft);
             dynamic queryRight = ResolveQuery(binaryExpressionRight);
-            var operationNode = new OperationNode(@operator, queryLeft, queryRight);
+            var operationNode = new OperationNode(operationNodeType, @operator, queryLeft, queryRight, operationNodeResolve);
 
             return operationNode;
         }

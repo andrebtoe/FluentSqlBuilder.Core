@@ -1,4 +1,7 @@
 ﻿using Dapper;
+using Dapper.SqlBuilder;
+using Dapper.SqlBuilder.Adapter;
+using FluentSqlBuilder;
 using FluentSqlBuilder.Data.DataModel;
 using FluentSqlBuilder.Playground;
 using SqlBuilderFluent.Lambdas.Inputs;
@@ -18,6 +21,19 @@ namespace SqlBuilderFluent.Playground
 
         static void Main()
         {
+            //SqlBuilder.SetAdapter(new SqlServerAdapter());
+
+            //var query = SqlBuilder.Select<OrderDataModel>()
+            //          .Where(x => x.DateTime.Year > 2000)
+            //          .OrderBy(x => x.CustomerId)
+            //          //.InnerJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id)
+            //          .Take(10);
+
+
+            //Console.WriteLine(query.CommandText);
+
+            return;
+
             PrintMenu();
 
             while (true)
@@ -244,7 +260,8 @@ namespace SqlBuilderFluent.Playground
         private static FluentSqlBuilder<OrderDataModel> SelectWithWhere05()
         {
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
-                                 .Where(x => x.Status == OrderStatus.Paid && x.CustomerId == 1);
+                                 //.Where(x => x.Status == OrderStatus.Paid && x.CustomerId == 1)
+                                 .Where(x => x.DateTime.Year >= 2000);
 
             return sqlBuilder;
         }

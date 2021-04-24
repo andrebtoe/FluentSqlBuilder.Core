@@ -10,5 +10,6 @@ namespace SqlBuilderFluent.Implementations.Interfaces
         string GetTableName(string tableName);
         string GetColumnName(string tableName, string columnName);
         string GetParameterFormated(string parameterId);
+        string GetColumnNameAndResolveByFunctionYear(string tableName, string columnName);
     }
 }

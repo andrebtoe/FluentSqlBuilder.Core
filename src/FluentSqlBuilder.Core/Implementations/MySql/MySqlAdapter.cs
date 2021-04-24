@@ -42,5 +42,10 @@ namespace FluentSqlBuilder.Core.Implementations.MySql
         {
             throw new NotImplementedException();
         }
+
+        public string GetColumnNameAndResolveByFunctionYear(string tableName, string columnName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

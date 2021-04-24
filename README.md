@@ -32,6 +32,10 @@ public class CustomerDataModel
 ## Simple select
 ```csharp
 var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented);
+
+var parameters = sqlBuilder.GetParameters();
+var sqlSelect = sqlBuilder.ToString();
+var results = YourConnection.Query<OrderDataModel>(sqlSelect, parameters);
 ```
 output
 ~~~~sql
@@ -45,6 +49,10 @@ FROM [checkout].[order]
 ```csharp
 var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                      .InnerJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id);
+
+var parameters = sqlBuilder.GetParameters();
+var sqlSelect = sqlBuilder.ToString();
+var results = YourConnection.Query<OrderDataModel>(sqlSelect, parameters);					 
 ```
 output
 ~~~~sql
@@ -59,6 +67,10 @@ INNER JOIN [customer] ON ([order].[customer_id] = [customer].[Id])
 ```csharp
 var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                      .LeftJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id);
+
+var parameters = sqlBuilder.GetParameters();
+var sqlSelect = sqlBuilder.ToString();
+var results = YourConnection.Query<OrderDataModel>(sqlSelect, parameters);					 
 ```
 output
 ~~~~sql
@@ -73,6 +85,10 @@ LEFT JOIN [customer] ON ([order].[customer_id] = [customer].[Id])
 ```csharp
 var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                     .RightJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id);
+
+var parameters = sqlBuilder.GetParameters();
+var sqlSelect = sqlBuilder.ToString();
+var results = YourConnection.Query<OrderDataModel>(sqlSelect, parameters);
 ```
 output
 ~~~~sql
@@ -87,6 +103,10 @@ RIGHT JOIN [customer] ON ([order].[customer_id] = [customer].[Id])
 ```csharp
 var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                      .Where(x => x.Status == OrderStatus.Paid && x.CustomerId == 1);
+
+var parameters = sqlBuilder.GetParameters();
+var sqlSelect = sqlBuilder.ToString();
+var results = YourConnection.Query<OrderDataModel>(sqlSelect, parameters);
 ```
 output
 ~~~~sql
@@ -101,6 +121,10 @@ AND [order].[customer_id] = @Param2)
 ```csharp
 var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                      .Where(x => x.Status == OrderStatus.Paid && x.CustomerId == 1);
+
+var parameters = sqlBuilder.GetParameters();
+var sqlSelect = sqlBuilder.ToString();
+var results = YourConnection.Query<OrderDataModel>(sqlSelect, parameters);
 ```
 output
 ~~~~sql
@@ -118,6 +142,10 @@ AND [customer].[Type] = @Param3
 ```csharp
 var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                      .OrderBy(x => x.CustomerId);
+
+var parameters = sqlBuilder.GetParameters();
+var sqlSelect = sqlBuilder.ToString();
+var results = YourConnection.Query<OrderDataModel>(sqlSelect, parameters);
 ```
 output
 ~~~~sql
@@ -132,6 +160,10 @@ ORDER BY [order].[customer_id] ASC
 ```csharp
 var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                  .OrderByDescending(x => x.CustomerId);
+
+var parameters = sqlBuilder.GetParameters();
+var sqlSelect = sqlBuilder.ToString();
+var results = YourConnection.Query<OrderDataModel>(sqlSelect, parameters);
 ```
 output
 ~~~~sql
@@ -146,6 +178,10 @@ FROM [checkout].[order] ORDER BY [order].[customer_id] DESC
 var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                      .Min(x => x.CustomerId)
                      .GroupBy(x => x.CustomerId);
+
+var parameters = sqlBuilder.GetParameters();
+var sqlSelect = sqlBuilder.ToString();
+var results = YourConnection.Query<OrderDataModel>(sqlSelect, parameters);
 ```
 output
 ~~~~sql
@@ -159,6 +195,10 @@ GROUP BY [order].[customer_id]
 var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                      .Min(x => x.CustomerId)
                      .GroupBy(x => x.CustomerId);
+
+var parameters = sqlBuilder.GetParameters();
+var sqlSelect = sqlBuilder.ToString();
+var results = YourConnection.Query<OrderDataModel>(sqlSelect, parameters);
 ```
 output
 ~~~~sql
@@ -172,6 +212,10 @@ HAVING MIN([order].[customer_id]) > @Param1
 ```csharp
 var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                     .Projection(x => new { x.Id, x.Status });
+
+var parameters = sqlBuilder.GetParameters();
+var sqlSelect = sqlBuilder.ToString();
+var results = YourConnection.Query<OrderDataModel>(sqlSelect, parameters);
 ```
 output
 ~~~~sql
@@ -184,6 +228,10 @@ FROM [checkout].[order]
 ```csharp
 var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                      .Limit(10);
+
+var parameters = sqlBuilder.GetParameters();
+var sqlSelect = sqlBuilder.ToString();
+var results = YourConnection.Query<OrderDataModel>(sqlSelect, parameters);
 ```
 output
 ~~~~sql
@@ -197,6 +245,10 @@ FROM [checkout].[order]
 ```csharp
 var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented)
                      .Limit(10);
+
+var parameters = sqlBuilder.GetParameters();
+var sqlSelect = sqlBuilder.ToString();
+var results = YourConnection.Query<OrderDataModel>(sqlSelect, parameters);
 ```
 output
 ~~~~sql
@@ -211,6 +263,10 @@ OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY
 ## Select with alias
 ```csharp
 var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented, "order_alias");
+
+var parameters = sqlBuilder.GetParameters();
+var sqlSelect = sqlBuilder.ToString();
+var results = YourConnection.Query<OrderDataModel>(sqlSelect, parameters);
 ```
 output
 ~~~~sql
@@ -223,6 +279,10 @@ FROM [checkout].[order_alias] AS order_alias
 ## Select with Projection, WHERE, INNER JOIN ORDER BY and Limit
 ```csharp
 var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(SqlAdapterType.SqlServer2019, SqlBuilderFormatting.Indented, "order_alias");
+
+var parameters = sqlBuilder.GetParameters();
+var sqlSelect = sqlBuilder.ToString();
+var results = YourConnection.Query<OrderDataModel>(sqlSelect, parameters);
 ```
 output
 ~~~~sql

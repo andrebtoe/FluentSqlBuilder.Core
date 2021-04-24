@@ -233,14 +233,14 @@ namespace SqlBuilderFluent.Core.Extensions
             }
         }
 
-        internal void BuildSelect(Node node, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction)
+        internal void BuildSelect(OperationNodeType operationNodeType, Node node, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction, OperationNodeResolveType? operationNodeResolveType)
         {
             dynamic nodeDynamic = node;
 
-            BuildSelect(nodeDynamic, tableAlias, targetClauseType, selectFunction);
+            BuildSelect(operationNodeType, nodeDynamic, tableAlias, targetClauseType, selectFunction, operationNodeResolveType);
         }
 
-        private void BuildSelect(MemberNode memberNode, ValueNode valueNode, ExpressionType operation, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction)
+        private void BuildSelect(OperationNodeType operationNodeType, MemberNode memberNode, ValueNode valueNode, ExpressionType operation, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction, OperationNodeResolveType? operationNodeResolveType)
         {
             var valueIsNull = valueNode.Value == null;
 
@@ -248,15 +248,21 @@ namespace SqlBuilderFluent.Core.Extensions
             {
                 ResolveNullValue(memberNode, operation, tableAlias, targetClauseType, selectFunction);
             }
-            else
+            else if (operationNodeType == OperationNodeType.Common)
             {
                 var operationValue = _operations[operation];
 
                 _sqlQueryBuilder.AddClauseByOperation(memberNode.TableName, memberNode.ColumnName, operationValue, valueNode.Value, tableAlias, targetClauseType, selectFunction);
             }
+            else if (operationNodeType == OperationNodeType.ColumnWithFunction)
+            {
+                var operationValue = _operations[operation];
+
+                _sqlQueryBuilder.AddClauseByOperationWithFunction(operationNodeResolveType.GetValueOrDefault(), memberNode.TableName, memberNode.ColumnName, operationValue, valueNode.Value, tableAlias, targetClauseType, selectFunction);
+            }
         }
 
-        private void BuildSelect(SingleOperationNode leftMember, Node rightMember, ExpressionType operation, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction)
+        private void BuildSelect(OperationNodeType operationNodeType, SingleOperationNode leftMember, Node rightMember, ExpressionType operation, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction, OperationNodeResolveType? operationNodeResolveType)
         {
             var operatorIsNot = leftMember.Operator == ExpressionType.Not;
 
@@ -264,18 +270,18 @@ namespace SqlBuilderFluent.Core.Extensions
             {
                 var left = leftMember as Node;
 
-                BuildSelect(left, rightMember, operation, tableAlias, targetClauseType, selectFunction);
+                BuildSelect(operationNodeType, left, rightMember, operation, tableAlias, targetClauseType, selectFunction, operationNodeResolveType);
             }
             else
             {
                 dynamic leftMemberNode = leftMember.Child;
                 dynamic rightMemberNode = rightMember;
 
-                BuildSelect(leftMemberNode, rightMemberNode, operation, tableAlias, targetClauseType, selectFunction);
+                BuildSelect(operationNodeType, leftMemberNode, rightMemberNode, operation, tableAlias, targetClauseType, selectFunction, operationNodeResolveType);
             }
         }
 
-        private void BuildSelect(LikeNode likeNode, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction)
+        private void BuildSelect(OperationNodeType operationNodeType, LikeNode likeNode, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction, OperationNodeResolveType? operationNodeResolveType)
         {
             if (likeNode.Method == LikeMethod.Equals)
             {
@@ -291,58 +297,58 @@ namespace SqlBuilderFluent.Core.Extensions
             }
         }
 
-        private void BuildSelect(OperationNode node, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction)
+        private void BuildSelect(OperationNodeType operationNodeType, OperationNode node, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction, OperationNodeResolveType? operationNodeResolveType)
         {
             dynamic left = node.Left;
             dynamic right = node.Right;
 
-            BuildSelect(left, right, node.Operator, tableAlias, targetClauseType, selectFunction);
+            BuildSelect(operationNodeType, left, right, node.Operator, tableAlias, targetClauseType, selectFunction, operationNodeResolveType);
         }
 
-        private void BuildSelect(MemberNode memberNode, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction)
+        private void BuildSelect(OperationNodeType operationNodeType, MemberNode memberNode, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction, OperationNodeResolveType? operationNodeResolveType)
         {
             var operation = _operations[ExpressionType.Equal];
 
             _sqlQueryBuilder.AddClauseByOperation(memberNode.TableName, memberNode.ColumnName, operation, true, tableAlias, targetClauseType, selectFunction);
         }
 
-        private void BuildSelect(SingleOperationNode node, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction)
+        private void BuildSelect(OperationNodeType operationNodeType, SingleOperationNode node, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction, OperationNodeResolveType? operationNodeResolveType)
         {
             var operatorIsNot = node.Operator == ExpressionType.Not;
 
             if (operatorIsNot)
                 _sqlQueryBuilder.AddOperatorNot(targetClauseType);
 
-            BuildSelect(node.Child, tableAlias, targetClauseType, selectFunction);
+            BuildSelect(operationNodeType, node.Child, tableAlias, targetClauseType, selectFunction, operationNodeResolveType);
         }
 
-        private void BuildSelect(ValueNode valueNode, MemberNode memberNode, ExpressionType operation, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction)
+        private void BuildSelect(OperationNodeType operationNodeType, ValueNode valueNode, MemberNode memberNode, ExpressionType operation, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction, OperationNodeResolveType? operationNodeResolveType)
         {
-            BuildSelect(memberNode, valueNode, operation, tableAlias, targetClauseType, selectFunction);
+            BuildSelect(operationNodeType, memberNode, valueNode, operation, tableAlias, targetClauseType, selectFunction, operationNodeResolveType);
         }
 
-        private void BuildSelect(MemberNode leftMember, MemberNode rightMember, ExpressionType operation, TargetClauseType targetClauseType, SelectFunction? selectFunction)
+        private void BuildSelect(OperationNodeType operationNodeType, MemberNode leftMember, MemberNode rightMember, ExpressionType operation, TargetClauseType targetClauseType, SelectFunction? selectFunction, OperationNodeResolveType? operationNodeResolveType)
         {
             var operationValue = _operations[operation];
 
             _sqlQueryBuilder.AddClauseByOperationComparison(leftMember.TableName, leftMember.ColumnName, operationValue, rightMember.TableName, rightMember.ColumnName, targetClauseType, selectFunction);
         }
 
-        private void BuildSelect(Node leftMember, SingleOperationNode rightMember, ExpressionType operation, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction)
+        private void BuildSelect(OperationNodeType operationNodeType, Node leftMember, SingleOperationNode rightMember, ExpressionType operation, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction, OperationNodeResolveType? operationNodeResolveType)
         {
-            BuildSelect(rightMember, leftMember, operation, tableAlias, targetClauseType, selectFunction);
+            BuildSelect(operationNodeType, rightMember, leftMember, operation, tableAlias, targetClauseType, selectFunction, operationNodeResolveType);
         }
 
-        private void BuildSelect(Node leftNode, Node rightNode, ExpressionType operation, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction)
+        private void BuildSelect(OperationNodeType operationNodeType, Node leftNode, Node rightNode, ExpressionType operation, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction, OperationNodeResolveType? operationNodeResolveType)
         {
             dynamic leftNodeDynamic = leftNode;
             dynamic rightNodeDynamic = rightNode;
 
             _sqlQueryBuilder.AddOperatorPrecedenceStart();
 
-            BuildSelect(leftNodeDynamic, tableAlias, targetClauseType, selectFunction);
+            BuildSelect(operationNodeType, leftNodeDynamic, tableAlias, targetClauseType, selectFunction, operationNodeResolveType);
             ResolveOperation(operation, targetClauseType);
-            BuildSelect(rightNodeDynamic, tableAlias, targetClauseType, selectFunction);
+            BuildSelect(operationNodeType, rightNodeDynamic, tableAlias, targetClauseType, selectFunction, operationNodeResolveType);
 
             _sqlQueryBuilder.AddOperatorPrecedenceEnd();
         }

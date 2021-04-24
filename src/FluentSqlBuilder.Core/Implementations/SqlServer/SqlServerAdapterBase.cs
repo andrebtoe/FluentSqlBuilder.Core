@@ -46,5 +46,13 @@ namespace SqlBuilderFluent.Implementations.SqlServer
         {
             throw new NotImplementedException();
         }
+
+        public string GetColumnNameAndResolveByFunctionYear(string tableName, string columnName)
+        {
+            var columnNameWithConvention = GetColumnName(tableName, columnName);
+            var columnNameWithConventionAndFunction = $"YEAR({columnNameWithConvention})";
+
+            return columnNameWithConventionAndFunction;
+        }
     }
 }

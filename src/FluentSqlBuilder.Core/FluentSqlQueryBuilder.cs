@@ -64,6 +64,40 @@ namespace SqlBuilderFluent
             _sqlQueryBuilderExtension.AddParameter(parameterNameByColumnName, columnValue);
         }
 
+        public void AddClauseByOperationWithFunction(OperationNodeResolveType operationNodeResolveType, string tableName, string columnName, string operation, object columnValue, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction)
+        {
+            var tableNameToUse = _sqlQueryBuilderExtension.GetTableNameUseConsideringAlias(tableName, tableAlias);
+            var parameterNameByColumnName = _sqlQueryBuilderExtension.GetParameterNameByColumnName(columnName);
+            var columnNameWithConvention = GetColumnNameWithConvention(operationNodeResolveType, tableNameToUse, columnName);
+            var parameterFormated = _sqlAdapter.GetParameterFormated(parameterNameByColumnName);
+            var clauseInput = new ClauseInput(columnNameWithConvention, operation, parameterFormated, ClauseInputType.ByOperation);
+
+            _sqlQueryBuilderExtension.AddClauseOperation(clauseInput, targetClauseType, selectFunction);
+            _sqlQueryBuilderExtension.AddParameter(parameterNameByColumnName, columnValue);
+        }
+
+        private string GetColumnNameWithConvention(OperationNodeResolveType? operationNodeResolveType, string tableName, string columnName)
+        {
+            var resolveByType = operationNodeResolveType.HasValue;
+            var operationNodeResolveTypeValue = operationNodeResolveType.GetValueOrDefault();
+
+            if (!resolveByType)
+                return _sqlAdapter.GetColumnName(tableName, columnName);
+
+            var columnNameAndResolvedByFunction = String.Empty;
+
+            switch (operationNodeResolveTypeValue)
+            {
+                case OperationNodeResolveType.DateTimeWithYear:
+                    columnNameAndResolvedByFunction = _sqlAdapter.GetColumnNameAndResolveByFunctionYear(tableName, columnName);
+                    break;
+                default:
+                    throw new SqlBuilderException($"'{operationNodeResolveType}' invalid");
+            }
+
+            return columnNameAndResolvedByFunction;
+        }
+
         public void AddClauseByOperationComparison(string leftTableName, string leftColumnName, string operation, string rightTableName, string rightColumnName, TargetClauseType targetClauseType, SelectFunction? selectFunction)
         {
             var columnNameLeft = _sqlAdapter.GetColumnName(leftTableName, leftColumnName);

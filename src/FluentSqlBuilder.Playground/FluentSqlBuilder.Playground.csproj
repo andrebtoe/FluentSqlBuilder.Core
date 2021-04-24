@@ -16,9 +16,16 @@ This package is only responsible for generating the select command, it does not 
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.78" />
+    <PackageReference Include="Dapper.SqlBuilder.Unofficial.Extensions" Version="1.0.25" />
+    <PackageReference Include="EasyDapper.MsSqlServer" Version="1.0.0-CI-20190214-110506" />
+    <PackageReference Include="ExpressionBuilderNetCore" Version="1.1.0" />
+    <PackageReference Include="FluentSqlBuilder" Version="1.0.0-alpha" />
+    <PackageReference Include="LambdicSql.SqlServer" Version="0.29.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
+    <PackageReference Include="SqlRepoEx.Core" Version="2.3.2" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="ToleSql" Version="1.5.0" />
   </ItemGroup>
 
   <ItemGroup>
