@@ -1,4 +1,4 @@
-﻿using FluentSqlBuilder.DataModel;
+﻿using FluentSqlBuilder.Data.DataModel;
 using SqlBuilderFluent;
 using SqlBuilderFluent.Types;
 using Xunit;
@@ -7,8 +7,8 @@ namespace FluentSqlBuilder.Test.Unit
 {
     public class SelectOrderByTest
     {
-        private static SqlAdapterType _typeDefault = SqlAdapterType.SqlServer2019;
-        private static SqlBuilderFormatting _formattingDefault = SqlBuilderFormatting.Indented;
+        private readonly static SqlAdapterType _typeDefault = SqlAdapterType.SqlServer2019;
+        private readonly static SqlBuilderFormatting _formattingDefault = SqlBuilderFormatting.Indented;
 
         [Fact]
         public void Test_Select_OrderBy_Asc_Without_Alias()

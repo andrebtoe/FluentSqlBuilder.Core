@@ -1,16 +1,20 @@
-﻿using FluentSqlBuilder.DataModel;
+﻿using Dapper;
+using FluentSqlBuilder.Data.DataModel;
 using FluentSqlBuilder.Playground;
 using SqlBuilderFluent.Lambdas.Inputs;
 using SqlBuilderFluent.Types;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Text.Json;
 
 namespace SqlBuilderFluent.Playground
 {
     public class Program
     {
-        private static SqlAdapterType _typeDefault = SqlAdapterType.SqlServer2019;
-        private static SqlBuilderFormatting _formattingDefault = SqlBuilderFormatting.Indented;
+        private readonly static SqlAdapterType _typeDefault = SqlAdapterType.SqlServer2019;
+        private readonly static SqlBuilderFormatting _formattingDefault = SqlBuilderFormatting.Indented;
+        private readonly static bool _executeInBD = true;
 
         static void Main()
         {
@@ -29,69 +33,97 @@ namespace SqlBuilderFluent.Playground
 
                     PrintMenu(numberMenuParse);
 
-
-                    var select = string.Empty;
+                    FluentSqlBuilder<OrderDataModel> fluentSqlBuilderOrder = null;
+                    FluentSqlBuilder<CustomerDataModel> fluentSqlBuilderCustomer = null;
 
                     switch (numberMenuParse)
                     {
                         case 1:
-                            select = SelectSimple01();
+                            fluentSqlBuilderOrder = SelectSimple01();
                             break;
                         case 2:
-                            select = SelectWithInnerJoin02();
+                            fluentSqlBuilderCustomer = SelectWithInnerJoin02();
                             break;
                         case 3:
-                            select = SelectWithLeftJoin03();
+                            fluentSqlBuilderCustomer = SelectWithLeftJoin03();
                             break;
                         case 4:
-                            select = SelectWithRightJoin04();
+                            fluentSqlBuilderCustomer = SelectWithRightJoin04();
                             break;
                         case 5:
-                            select = SelectWithWhere05();
+                            fluentSqlBuilderOrder = SelectWithWhere05();
                             break;
                         case 6:
-                            select = SelectWithWhereAndInnerJoin06_01();
+                            fluentSqlBuilderCustomer = SelectWithWhereAndInnerJoin06_01();
                             break;
                         case 7:
-                            select = SelectWithWhereAndInnerJoin07_02();
+                            fluentSqlBuilderCustomer = SelectWithWhereAndInnerJoin07_02();
                             break;
                         case 8:
-                            select = SelectWithOrderBy08();
+                            fluentSqlBuilderOrder = SelectWithOrderBy08();
                             break;
                         case 9:
-                            select = SelectWithOrderByDescendingBy09();
+                            fluentSqlBuilderOrder = SelectWithOrderByDescendingBy09();
                             break;
                         case 10:
-                            select = SelectWithGroupBy10();
+                            fluentSqlBuilderOrder = SelectWithGroupBy10();
                             break;
                         case 11:
-                            select = SelectWithGroupByAndHaving11();
+                            fluentSqlBuilderOrder = SelectWithGroupByAndHaving11();
                             break;
                         case 12:
-                            select = SelectWithProjection12();
+                            fluentSqlBuilderOrder = SelectWithProjection12();
                             break;
                         case 13:
-                            select = SelectWithLimit13();
+                            fluentSqlBuilderOrder = SelectWithLimit13();
                             break;
                         case 14:
-                            select = SelectWithPagination14();
+                            fluentSqlBuilderOrder = SelectWithPagination14();
                             break;
                         case 15:
-                            select = SelectWithAlias15();
+                            fluentSqlBuilderOrder = SelectWithAlias15();
                             break;
                         case 16:
-                            select = SelectWithFull16();
+                            fluentSqlBuilderCustomer = SelectWithFull16();
                             break;
                         case 17:
-                            select = SelectWithDistinct17();
+                            fluentSqlBuilderOrder = SelectWithDistinct17();
                             break;
                         default:
                             throw new ArgumentException("Number invalid");
                     }
 
-                    Console.WriteLine("\n\n----------- START -----------\n\n ");
-                    Console.WriteLine(DefineColorInSelect(select));
-                    Console.WriteLine("\n\n----------- END -----------");
+                    string sqlSelect = null;
+                    object data = null;
+
+                    if (fluentSqlBuilderOrder != null)
+                    {
+                        sqlSelect = fluentSqlBuilderOrder.ToString();
+                        var parameters = fluentSqlBuilderOrder.GetParameters();
+                        data = ExecuteQuery<OrderDataModel>(sqlSelect, parameters);
+                    }
+                    else if (fluentSqlBuilderCustomer != null)
+                    {
+                        sqlSelect = fluentSqlBuilderCustomer.ToString();
+                        var parameters = fluentSqlBuilderCustomer.GetParameters();
+                        data = ExecuteQuery<CustomerDataModel>(sqlSelect, parameters);
+                    }
+
+                    Console.WriteLine("\n\n----------- SQL -----------\n\n ");
+                    Console.WriteLine(DefineColorInSelect(sqlSelect));
+                    Console.WriteLine();
+
+                    if (_executeInBD)
+                    {
+                        var optionsJson = new JsonSerializerOptions()
+                        {
+                            WriteIndented = true
+                        };
+                        var dataJson = JsonSerializer.Serialize(data, optionsJson);
+
+                        Console.WriteLine("\n\n----------- JSON -----------\n\n ");
+                        Console.WriteLine(dataJson);
+                    }
                 }
                 else
                 {
@@ -159,178 +191,152 @@ namespace SqlBuilderFluent.Playground
             printItem("17 - Select with DISTINT", menuItemSelected == 17);
         }
 
-        private static string SelectSimple01()
+        private static IEnumerable<TTable> ExecuteQuery<TTable>(string sqlSelect, IDictionary<string, object> parameters)
+        {
+            if (!_executeInBD)
+                return null;
+
+            IEnumerable<TTable> data;
+
+            using (var connection = new SqlConnection("Initial Catalog=FluentSqlBuilder;User Id=sa;Password=b6WTRgh6;Data source=127.0.0.1,1434"))
+            {
+                connection.Open();
+
+                data = connection.Query<TTable>(sqlSelect, parameters);
+
+                connection.Close();
+            }
+
+            return data;
+        }
+
+        private static FluentSqlBuilder<OrderDataModel> SelectSimple01()
         {
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault);
 
-            var parameters = sqlBuilder.GetParameters();
-            var sqlSelect = sqlBuilder.ToString();
-
-            return sqlSelect;
+            return sqlBuilder;
         }
 
-        private static string SelectWithInnerJoin02()
+        private static FluentSqlBuilder<CustomerDataModel> SelectWithInnerJoin02()
         {
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
                                  .InnerJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id);
 
-            var parameters = sqlBuilder.GetParameters();
-            var sqlSelect = sqlBuilder.ToString();
-
-            return sqlSelect;
+            return sqlBuilder;
         }
 
-        private static string SelectWithLeftJoin03()
+        private static FluentSqlBuilder<CustomerDataModel> SelectWithLeftJoin03()
         {
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
                                  .LeftJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id);
 
-            var parameters = sqlBuilder.GetParameters();
-            var sqlSelect = sqlBuilder.ToString();
-
-            return sqlSelect;
+            return sqlBuilder;
         }
 
-        private static string SelectWithRightJoin04()
+        private static FluentSqlBuilder<CustomerDataModel> SelectWithRightJoin04()
         {
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
                                  .RightJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id);
 
-            var parameters = sqlBuilder.GetParameters();
-            var sqlSelect = sqlBuilder.ToString();
-
-            return sqlSelect;
+            return sqlBuilder;
         }
 
-        private static string SelectWithWhere05()
+        private static FluentSqlBuilder<OrderDataModel> SelectWithWhere05()
         {
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
                                  .Where(x => x.Status == OrderStatus.Paid && x.CustomerId == 1);
 
-            var parameters = sqlBuilder.GetParameters();
-            var sqlSelect = sqlBuilder.ToString();
-
-            return sqlSelect;
+            return sqlBuilder;
         }
 
-        private static string SelectWithWhereAndInnerJoin06_01()
+        private static FluentSqlBuilder<CustomerDataModel> SelectWithWhereAndInnerJoin06_01()
         {
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
                                  .Where(x => x.Status == OrderStatus.Paid && x.CustomerId == 1)
                                  .Where<CustomerDataModel>(x => x.Type == CustomerType.B2B)
                                  .InnerJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id);
 
-            var parameters = sqlBuilder.GetParameters();
-            var sqlSelect = sqlBuilder.ToString();
-
-            return sqlSelect;
+            return sqlBuilder;
         }
 
-        private static string SelectWithWhereAndInnerJoin07_02()
+        private static FluentSqlBuilder<CustomerDataModel> SelectWithWhereAndInnerJoin07_02()
         {
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
                                  .Where(x => x.Status == OrderStatus.Paid && x.CustomerId == 1)
                                  .InnerJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id)
                                  .Where(x => x.Type == CustomerType.B2B);
 
-            var parameters = sqlBuilder.GetParameters();
-            var sqlSelect = sqlBuilder.ToString();
-
-            return sqlSelect;
+            return sqlBuilder;
         }
 
-        private static string SelectWithOrderBy08()
+        private static FluentSqlBuilder<OrderDataModel> SelectWithOrderBy08()
         {
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
                                  .OrderBy(x => x.CustomerId);
 
-            var parameters = sqlBuilder.GetParameters();
-            var sqlSelect = sqlBuilder.ToString();
-
-            return sqlSelect;
+            return sqlBuilder;
         }
 
-        private static string SelectWithOrderByDescendingBy09()
+        private static FluentSqlBuilder<OrderDataModel> SelectWithOrderByDescendingBy09()
         {
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
                                  .OrderByDescending(x => x.CustomerId);
 
-            var parameters = sqlBuilder.GetParameters();
-            var sqlSelect = sqlBuilder.ToString();
-
-            return sqlSelect;
+            return sqlBuilder;
         }
 
-        private static string SelectWithGroupBy10()
+        private static FluentSqlBuilder<OrderDataModel> SelectWithGroupBy10()
         {
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
                                  .Min(x => x.CustomerId)
                                  .GroupBy(x => x.CustomerId);
 
-            var parameters = sqlBuilder.GetParameters();
-            var sqlSelect = sqlBuilder.ToString();
-
-            return sqlSelect;
+            return sqlBuilder;
         }
 
-        private static string SelectWithGroupByAndHaving11()
+        private static FluentSqlBuilder<OrderDataModel> SelectWithGroupByAndHaving11()
         {
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
                                  .Min(x => x.CustomerId)
                                  .GroupBy(x => x.CustomerId)
                                  .Having(SelectFunction.Min, x => x.CustomerId > 1);
 
-            var parameters = sqlBuilder.GetParameters();
-            var sqlSelect = sqlBuilder.ToString();
-
-            return sqlSelect;
+            return sqlBuilder;
         }
 
-        private static string SelectWithProjection12()
+        private static FluentSqlBuilder<OrderDataModel> SelectWithProjection12()
         {
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
                                  .Projection(x => new { x.Id, x.Status });
 
-            var parameters = sqlBuilder.GetParameters();
-            var sqlSelect = sqlBuilder.ToString();
-
-            return sqlSelect;
+            return sqlBuilder;
         }
 
-        private static string SelectWithLimit13()
+        private static FluentSqlBuilder<OrderDataModel> SelectWithLimit13()
         {
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
                                  .Limit(10);
 
-            var parameters = sqlBuilder.GetParameters();
-            var sqlSelect = sqlBuilder.ToString();
-
-            return sqlSelect;
+            return sqlBuilder;
         }
 
-        private static string SelectWithPagination14()
+        private static FluentSqlBuilder<OrderDataModel> SelectWithPagination14()
         {
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
                                  .OrderBy(x => x.Id)
                                  .Pagination(10, 1);
 
-            var parameters = sqlBuilder.GetParameters();
-            var sqlSelect = sqlBuilder.ToString();
-
-            return sqlSelect;
+            return sqlBuilder;
         }
 
-        private static string SelectWithAlias15()
+        private static FluentSqlBuilder<OrderDataModel> SelectWithAlias15()
         {
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault, "order_alias");
 
-            var parameters = sqlBuilder.GetParameters();
-            var sqlSelect = sqlBuilder.ToString();
-
-            return sqlSelect;
+            return sqlBuilder;
         }
 
-        private static string SelectWithFull16()
+        private static FluentSqlBuilder<CustomerDataModel> SelectWithFull16()
         {
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault, "order_alias")
                                    .Projection((orderDataModel) => new { orderDataModel.CustomerId }, "order_alias")
@@ -340,21 +346,15 @@ namespace SqlBuilderFluent.Playground
                                    .OrderBy(x => x.Id)
                                    .Limit(10);
 
-            var parameters = sqlBuilder.GetParameters();
-            var sqlSelect = sqlBuilder.ToString();
-
-            return sqlSelect;
+            return sqlBuilder;
         }
 
-        private static string SelectWithDistinct17()
+        private static FluentSqlBuilder<OrderDataModel> SelectWithDistinct17()
         {
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
                                  .Distinct(x => x.CustomerId);
 
-            var parameters = sqlBuilder.GetParameters();
-            var sqlSelect = sqlBuilder.ToString();
-
-            return sqlSelect;
+            return sqlBuilder;
         }
     }
 }

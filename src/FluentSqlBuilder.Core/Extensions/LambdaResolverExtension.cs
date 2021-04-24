@@ -116,7 +116,7 @@ namespace SqlBuilderFluent.Core.Extensions
             _sqlQueryBuilder.AddGroupBy(tableName, columnName);
         }
 
-        public void BuildSelectByParameter<TTable>(Expression expression, string tableAlias)
+        public void BuildSelectByParameter<TTable>(Expression expression, string tableAlias, Type tableToProjection)
         {
             var tableName = SqlBuilderFluentHelper.GetTableName(expression.Type);
             var addTableAlias = !String.IsNullOrEmpty(tableAlias);
@@ -124,23 +124,23 @@ namespace SqlBuilderFluent.Core.Extensions
             if (addTableAlias)
                 tableName = tableAlias;
 
-            _sqlQueryBuilder.Select(tableName);
+            _sqlQueryBuilder.Select(tableName, tableToProjection);
         }
 
-        public void SelectByMemberAccess<TTable>(Expression expression, string tableAlias)
+        public void SelectByMemberAccess<TTable>(Expression expression, string tableAlias, Type tableToProjection)
         {
             var memberExpression = GetMemberExpression(expression);
 
-            Select<TTable>(memberExpression, tableAlias);
+            Select<TTable>(memberExpression, tableAlias, tableToProjection);
         }
 
-        public void SelectByAnonymous<TTable>(Expression expression, string tableAlias)
+        public void SelectByAnonymous<TTable>(Expression expression, string tableAlias, Type tableToProjection)
         {
             var newExpression = expression as NewExpression;
             var arguments = newExpression.Arguments;
 
             foreach (MemberExpression memberExpression in arguments)
-                Select<TTable>(memberExpression, tableAlias);
+                Select<TTable>(memberExpression, tableAlias, tableToProjection);
         }
 
         public static object ResolveValue(PropertyInfo property, object instance)
@@ -204,14 +204,15 @@ namespace SqlBuilderFluent.Core.Extensions
             _sqlQueryBuilder.Select(tableName, columnName, selectFunction, tableAlias, columnAlias);
         }
 
-        private void Select<TTable>(MemberExpression expression, string tableAlias)
+        private void Select<TTable>(MemberExpression expression, string tableAlias, Type? tableToProjection = null)
         {
             var isClass = expression.Type.IsClass && expression.Type != typeof(String);
             var addTableAlias = !String.IsNullOrEmpty(tableAlias);
 
             if (isClass)
             {
-                var tableName = SqlBuilderFluentHelper.GetTableName(expression.Type);
+                var tableTypeToUse = tableToProjection != null ? tableToProjection : expression.Type;
+                var tableName = SqlBuilderFluentHelper.GetTableName(tableTypeToUse);
 
                 if (addTableAlias)
                     tableName = tableAlias;
@@ -220,7 +221,7 @@ namespace SqlBuilderFluent.Core.Extensions
             }
             else
             {
-                var tableName = SqlBuilderFluentHelper.GetTableName<TTable>();
+                var tableName = tableToProjection != null ? SqlBuilderFluentHelper.GetTableName(tableToProjection) : SqlBuilderFluentHelper.GetTableName<TTable>();
                 var columnName = SqlBuilderFluentHelper.GetColumnName(expression);
                 var hasColumnAttribute = SqlBuilderFluentHelper.HasColumnAttribute(expression);
                 var columnNameAlias = hasColumnAttribute ? SqlBuilderFluentHelper.GetColumnNameWithAttribute(expression) : null;

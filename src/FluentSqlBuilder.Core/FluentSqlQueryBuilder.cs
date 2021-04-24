@@ -150,9 +150,9 @@ namespace SqlBuilderFluent
             _sqlQueryBuilderExtension.AddGroupingColumn(columnName);
         }
 
-        public void Select(string tableName)
+        public void Select(string tableName, Type tableToProjection = null)
         {
-            var columnsToAppendSelect = _sqlQueryBuilderExtension.GetColumnsToAppendSelectFromTableType(tableName);
+            var columnsToAppendSelect = _sqlQueryBuilderExtension.GetColumnsToAppendSelectFromTableType(tableName, tableToProjection);
 
             _sqlQueryBuilderExtension.AddProjectionColumns(columnsToAppendSelect);
         }
