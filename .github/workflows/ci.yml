@@ -32,6 +32,8 @@ jobs:
 
     - name: Create package
       run: dotnet pack FluentSqlBuilder.Core/FluentSqlBuilder.Core.csproj --configuration Release
+      working-directory: src
     
     - name: Push pachage
       run: dotnet nuget push "bin/Release/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+      working-directory: src
