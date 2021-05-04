@@ -36,10 +36,12 @@ jobs:
       run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
     
     - name: Pack
-      run: dotnet pack --configuration Release /p:Version=${VERSION} --output .
+      run: dotnet pack FluentSqlBuilder.sln --configuration Release /p:Version=${VERSION} --output .
+      working-directory: src
     
     - name: Push
-      run: dotnet nuget push NuGet.Workflow.${VERSION}.nupkg --source https://nuget.pkg.github.com/acraven/index.json --api-key ${GITHUB_TOKEN}
+      run: dotnet nuget push FluentSqlBuilder.Core/bin/Release/FluentSqlBuilder.Core.${VERSION}.nupkg --source https://nuget.pkg.github.com/acraven/index.json --api-key ${GITHUB_TOKEN}
+      working-directory: src
       env:
         GITHUB_TOKEN: ${{ secrets.NUGET_API_KEY }}
 
