@@ -6,8 +6,8 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["FluentSqlBuilder.Playground/FluentSqlBuilder.Playground.csproj", "FluentSqlBuilder.Playground/"]
-COPY ["FluentSqlBuilder.DataModel/FluentSqlBuilder.Data.csproj", "FluentSqlBuilder.DataModel/"]
 COPY ["FluentSqlBuilder.Core/FluentSqlBuilder.Core.csproj", "FluentSqlBuilder.Core/"]
+COPY ["FluentSqlBuilder.Data/FluentSqlBuilder.Data.csproj", "FluentSqlBuilder.Data/"]
 RUN dotnet restore "FluentSqlBuilder.Playground/FluentSqlBuilder.Playground.csproj"
 COPY . .
 WORKDIR "/src/FluentSqlBuilder.Playground"

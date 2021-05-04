@@ -9,15 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentSqlBuilder.Test.Unit"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentSqlBuilder.Playground", "FluentSqlBuilder.Playground\FluentSqlBuilder.Playground.csproj", "{DCA989D0-8FFA-4FFC-86A8-2CFC61779B44}"
 EndProject
-<<<<<<< HEAD
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentSqlBuilder.Data", "FluentSqlBuilder.DataModel\FluentSqlBuilder.Data.csproj", "{D36409DB-897E-4107-904C-DFA5E37CC1B9}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{0187AA41-7A14-4CEC-A94E-EB82B4D66142}"
-=======
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentSqlBuilder.Data", "FluentSqlBuilder.Data\FluentSqlBuilder.Data.csproj", "{D36409DB-897E-4107-904C-DFA5E37CC1B9}"
-EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{05570C63-AC90-441F-A95B-57092B6B8BB8}"
->>>>>>> develop
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{FCE108B6-1751-4B77-B5F5-F7AC55B0F539}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,17 +35,10 @@ Global
 		{D36409DB-897E-4107-904C-DFA5E37CC1B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D36409DB-897E-4107-904C-DFA5E37CC1B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D36409DB-897E-4107-904C-DFA5E37CC1B9}.Release|Any CPU.Build.0 = Release|Any CPU
-<<<<<<< HEAD
-		{0187AA41-7A14-4CEC-A94E-EB82B4D66142}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0187AA41-7A14-4CEC-A94E-EB82B4D66142}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0187AA41-7A14-4CEC-A94E-EB82B4D66142}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0187AA41-7A14-4CEC-A94E-EB82B4D66142}.Release|Any CPU.Build.0 = Release|Any CPU
-=======
-		{05570C63-AC90-441F-A95B-57092B6B8BB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{05570C63-AC90-441F-A95B-57092B6B8BB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{05570C63-AC90-441F-A95B-57092B6B8BB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{05570C63-AC90-441F-A95B-57092B6B8BB8}.Release|Any CPU.Build.0 = Release|Any CPU
->>>>>>> develop
+		{FCE108B6-1751-4B77-B5F5-F7AC55B0F539}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCE108B6-1751-4B77-B5F5-F7AC55B0F539}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCE108B6-1751-4B77-B5F5-F7AC55B0F539}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCE108B6-1751-4B77-B5F5-F7AC55B0F539}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

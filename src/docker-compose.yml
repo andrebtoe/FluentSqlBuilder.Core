@@ -5,6 +5,12 @@ networks:
       driver: bridge
 
 services:
+  fluentsqlbuilder.playground:
+    image: ${DOCKER_REGISTRY-}fluentsqlbuilderplayground
+    build:
+      context: .
+      dockerfile: FluentSqlBuilder.Playground/Dockerfile
+
   mssql:
     image: mcr.microsoft.com/mssql/server:2017-latest
     environment: 

@@ -21,11 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FluentSqlBuilder.Core\FluentSqlBuilder.Core.csproj" />
-<<<<<<< HEAD
-    <ProjectReference Include="..\FluentSqlBuilder.DataModel\FluentSqlBuilder.Data.csproj" />
-=======
-    <ProjectReference Include="..\FluentSqlBuilder.Data\FluentSqlBuilder.Data.csproj" />
->>>>>>> develop
+	<ProjectReference Include="..\FluentSqlBuilder.DataModel\FluentSqlBuilder.Data.csproj" />
   </ItemGroup>
 
 </Project>

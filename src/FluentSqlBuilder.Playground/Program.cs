@@ -1,10 +1,4 @@
 ﻿using Dapper;
-<<<<<<< HEAD
-using Dapper.SqlBuilder;
-using Dapper.SqlBuilder.Adapter;
-using FluentSqlBuilder;
-=======
->>>>>>> develop
 using FluentSqlBuilder.Data.DataModel;
 using FluentSqlBuilder.Playground;
 using SqlBuilderFluent.Lambdas.Inputs;
@@ -24,19 +18,6 @@ namespace SqlBuilderFluent.Playground
 
         static void Main()
         {
-            //SqlBuilder.SetAdapter(new SqlServerAdapter());
-
-            //var query = SqlBuilder.Select<OrderDataModel>()
-            //          .Where(x => x.DateTime.Year > 2000)
-            //          .OrderBy(x => x.CustomerId)
-            //          //.InnerJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id)
-            //          .Take(10);
-
-
-            //Console.WriteLine(query.CommandText);
-
-            return;
-
             PrintMenu();
 
             while (true)
@@ -216,7 +197,6 @@ namespace SqlBuilderFluent.Playground
                 return null;
 
             IEnumerable<TTable> data;
-<<<<<<< HEAD
 
             using (var connection = new SqlConnection("Initial Catalog=FluentSqlBuilder;User Id=sa;Password=b6WTRgh6;Data source=127.0.0.1,1434"))
             {
@@ -237,28 +217,6 @@ namespace SqlBuilderFluent.Playground
             return sqlBuilder;
         }
 
-=======
-
-            using (var connection = new SqlConnection("Initial Catalog=FluentSqlBuilder;User Id=sa;Password=b6WTRgh6;Data source=127.0.0.1,1434"))
-            {
-                connection.Open();
-
-                data = connection.Query<TTable>(sqlSelect, parameters);
-
-                connection.Close();
-            }
-
-            return data;
-        }
-
-        private static FluentSqlBuilder<OrderDataModel> SelectSimple01()
-        {
-            var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault);
-
-            return sqlBuilder;
-        }
-
->>>>>>> develop
         private static FluentSqlBuilder<CustomerDataModel> SelectWithInnerJoin02()
         {
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
@@ -285,14 +243,8 @@ namespace SqlBuilderFluent.Playground
 
         private static FluentSqlBuilder<OrderDataModel> SelectWithWhere05()
         {
-<<<<<<< HEAD
-            var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault);
-                                 //.Where(x => x.Status == OrderStatus.Paid && x.CustomerId == 1)
-                                 //.Where(x => x.DateTime.Year >= 2000);
-=======
             var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
                                  .Where(x => x.Status == OrderStatus.Paid && x.CustomerId == 1);
->>>>>>> develop
 
             return sqlBuilder;
         }
