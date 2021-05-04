@@ -15,7 +15,7 @@ This package is only responsible for generating the select command, it does not 
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.0.78" />
+    <PackageReference Include="Dapper" Version="2.0.90" />
     <PackageReference Include="Dapper.SqlBuilder.Unofficial.Extensions" Version="1.0.25" />
     <PackageReference Include="EasyDapper.MsSqlServer" Version="1.0.0-CI-20190214-110506" />
     <PackageReference Include="ExpressionBuilderNetCore" Version="1.1.0" />
