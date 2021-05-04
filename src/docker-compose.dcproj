@@ -3,7 +3,11 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
+<<<<<<< HEAD
     <ProjectGuid>0187aa41-7a14-4cec-a94e-eb82b4d66142</ProjectGuid>
+=======
+    <ProjectGuid>05570c63-ac90-441f-a95b-57092b6b8bb8</ProjectGuid>
+>>>>>>> develop
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.yml" />

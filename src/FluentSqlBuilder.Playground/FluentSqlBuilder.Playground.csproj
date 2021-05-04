@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -16,6 +16,7 @@ This package is only responsible for generating the select command, it does not 
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.78" />
+<<<<<<< HEAD
     <PackageReference Include="Dapper.SqlBuilder.Unofficial.Extensions" Version="1.0.25" />
     <PackageReference Include="EasyDapper.MsSqlServer" Version="1.0.0-CI-20190214-110506" />
     <PackageReference Include="ExpressionBuilderNetCore" Version="1.1.0" />
@@ -26,11 +27,20 @@ This package is only responsible for generating the select command, it does not 
     <PackageReference Include="SqlRepoEx.Core" Version="2.3.2" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
     <PackageReference Include="ToleSql" Version="1.5.0" />
+=======
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+>>>>>>> develop
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FluentSqlBuilder.Core\FluentSqlBuilder.Core.csproj" />
+<<<<<<< HEAD
     <ProjectReference Include="..\FluentSqlBuilder.DataModel\FluentSqlBuilder.Data.csproj" />
+=======
+    <ProjectReference Include="..\FluentSqlBuilder.Data\FluentSqlBuilder.Data.csproj" />
+>>>>>>> develop
   </ItemGroup>
 
 </Project>

@@ -113,7 +113,7 @@ namespace FluentSqlBuilder.Test.Unit
             Assert.True(sqlSelectWithAlias.Contains($"HAVING {functionName}([{tableNameAlias}].[customer_id]) >= @Param1"), $"'HAVING' expected clause => {sqlAdapterType}:{formatting}");
         }
 
-        private void AddFunctionByRef<TTable>(FluentSqlBuilder<TTable> fluentSqlBuilder, SelectFunction selectFunction, string tableAlias = null, string columnAlias = null)
+        private static void AddFunctionByRef<TTable>(FluentSqlBuilder<TTable> fluentSqlBuilder, SelectFunction selectFunction, string tableAlias = null, string columnAlias = null)
         {
             switch (selectFunction)
             {

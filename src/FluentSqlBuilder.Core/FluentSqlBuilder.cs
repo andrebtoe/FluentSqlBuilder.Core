@@ -50,7 +50,7 @@ namespace SqlBuilderFluent
         /// <returns>Returns the instance of FluentSqlBuilder.</returns>
         public FluentSqlBuilder<TTable> Projection(Expression<Func<TTable, object>> columnExp, string tableAlias = null)
         {
-            _resolver.Select(columnExp, tableAlias);
+            _resolver.Select(columnExp, tableAlias, typeof(TTable));
 
             return this;
         }
@@ -63,7 +63,7 @@ namespace SqlBuilderFluent
         /// <returns>Returns the instance of FluentSqlBuilder<TTable>. Corresponds to the root instance</returns>
         public FluentSqlBuilder<TTable> Projection<TTableProjection>(Expression<Func<TTableProjection, object>> columnExp, string tableAlias = null)
         {
-            _resolver.Select(columnExp, tableAlias);
+            _resolver.Select(columnExp, tableAlias, typeof(TTableProjection));
 
             return this;
         }

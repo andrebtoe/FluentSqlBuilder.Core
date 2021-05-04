@@ -7,8 +7,8 @@ namespace FluentSqlBuilder.Test.Unit
 {
     public class SelectParameterTest
     {
-        private static SqlAdapterType _typeDefault = SqlAdapterType.SqlServer2019;
-        private static SqlBuilderFormatting _formattingDefault = SqlBuilderFormatting.Indented;
+        private readonly static SqlAdapterType _typeDefault = SqlAdapterType.SqlServer2019;
+        private readonly static SqlBuilderFormatting _formattingDefault = SqlBuilderFormatting.Indented;
 
         [Fact]
         public void Test_Select_Parameters_Case01()
