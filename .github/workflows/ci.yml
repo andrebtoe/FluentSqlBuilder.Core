@@ -35,8 +35,8 @@ jobs:
     - name: Set VERSION variable from tag
       run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
 
-    - name: Pack
-      run: echo ${VERSION}
+    - name: Print Version
+      run: echo ${{ VERSION }}
       working-directory: src
 
     - name: Pack
