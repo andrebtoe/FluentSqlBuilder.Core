@@ -58,7 +58,7 @@ namespace FluentSqlBuilder.Test.Unit
             Assert.True(sqlSelectWithoutAlias.Contains($"[{tableName}].[customer_id] AS CustomerId"), $"Column not found");
             Assert.True(sqlSelectWithoutAlias.Contains($"[{tableName}].[Status]"), $"Column not found");
             Assert.True(sqlSelectWithoutAlias.Contains($"FROM [checkout].[{tableName}]"), $"FROM invalid");
-            Assert.True(sqlSelectWithoutAlias.Contains($"{joinTypeNormalized} JOIN [checkout].[{tableNameJoin}] ON ([{tableName}].[customer_id] = [{tableNameJoin}].[Id])"), $"{joinTypeNormalized} JOIN invalid");
+            Assert.True(sqlSelectWithoutAlias.Contains($"{joinTypeNormalized} JOIN [customers].[{tableNameJoin}] ON ([{tableName}].[customer_id] = [{tableNameJoin}].[Id])"), $"{joinTypeNormalized} JOIN invalid");
             Assert.True(sqlSelectWithoutAlias.Contains($"WHERE ([{tableName}].[Status] = @Param1"), $"WHERE invalid");
             Assert.True(sqlSelectWithoutAlias.Contains($"AND [{tableName}].[customer_id] = @Param2)"), $"WHERE invalid");
             Assert.True(sqlSelectWithoutAlias.Contains($"AND [{tableNameJoin}].[Type] = @Param3"), $"WHERE invalid");
@@ -68,7 +68,7 @@ namespace FluentSqlBuilder.Test.Unit
             Assert.True(sqlSelectWithAlias.Contains($"[{tableNameOrderAlias}].[customer_id] AS CustomerId"), $"Column not found");
             Assert.True(sqlSelectWithAlias.Contains($"[{tableNameOrderAlias}].[Status]"), $"Column not found");
             Assert.True(sqlSelectWithAlias.Contains($"FROM [checkout].[{tableName}] AS {tableNameOrderAlias}"), $"FROM invalid");
-            Assert.True(sqlSelectWithAlias.Contains($"{joinTypeNormalized} JOIN [checkout].[{tableNameJoin}] AS {tableNameCustomerAlias} ON ([{tableNameOrderAlias}].[customer_id] = [{tableNameCustomerAlias}].[Id])"), $"{joinTypeNormalized} JOIN invalid");
+            Assert.True(sqlSelectWithAlias.Contains($"{joinTypeNormalized} JOIN [customers].[{tableNameJoin}] AS {tableNameCustomerAlias} ON ([{tableNameOrderAlias}].[customer_id] = [{tableNameCustomerAlias}].[Id])"), $"{joinTypeNormalized} JOIN invalid");
             Assert.True(sqlSelectWithAlias.Contains($"WHERE ([{tableNameOrderAlias}].[Status] = @Param1"), $"WHERE invalid");
             Assert.True(sqlSelectWithAlias.Contains($"AND [{tableNameOrderAlias}].[customer_id] = @Param2)"), $"WHERE invalid");
             Assert.True(sqlSelectWithAlias.Contains($"AND [{tableNameCustomerAlias}].[Type] = @Param3"), $"WHERE invalid");
