@@ -1,4 +1,4 @@
-﻿using FluentSqlBuilder.DataModel;
+﻿using FluentSqlBuilder.Data.DataModel;
 using SqlBuilderFluent;
 using SqlBuilderFluent.Lambdas.Inputs;
 using SqlBuilderFluent.Types;

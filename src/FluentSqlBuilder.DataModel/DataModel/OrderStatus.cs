@@ -1,4 +1,4 @@
-﻿namespace FluentSqlBuilder.DataModel
+﻿namespace FluentSqlBuilder.Data.DataModel
 {
     public enum OrderStatus
     {

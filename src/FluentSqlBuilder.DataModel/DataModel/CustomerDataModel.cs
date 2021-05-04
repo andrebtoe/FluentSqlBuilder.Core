@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FluentSqlBuilder.DataModel
+namespace FluentSqlBuilder.Data.DataModel
 {
     [Table("customer", Schema = "customers")]
     public class CustomerDataModel

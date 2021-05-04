@@ -1,4 +1,4 @@
-﻿using FluentSqlBuilder.DataModel;
+﻿using FluentSqlBuilder.Data.DataModel;
 using SqlBuilderFluent;
 using SqlBuilderFluent.Exceptions;
 using SqlBuilderFluent.Types;
@@ -20,7 +20,7 @@ namespace FluentSqlBuilder.Test.Unit
             var sqlBuilderWithoutAlias = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
                                              .OrderBy(x => x.CustomerId)
                                              .Pagination(10, 1);
-            
+
             var sqlBuilderAlias = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault, tableNameAlias)
                                       .OrderBy(tableNameAlias, x => x.CustomerId)
                                       .Pagination(10, 1);

@@ -1,4 +1,4 @@
-﻿using FluentSqlBuilder.DataModel;
+﻿using FluentSqlBuilder.Data.DataModel;
 using SqlBuilderFluent;
 using SqlBuilderFluent.Inputs;
 using SqlBuilderFluent.Types;
@@ -40,7 +40,7 @@ namespace FluentSqlBuilder.Test.Unit
             var sqlBuilderWithoutAlias = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
                                              .Where(x => x.Status == OrderStatus.Paid && x.CustomerId == 1)
                                              .Where<CustomerDataModel>(x => x.Type == CustomerType.B2B);
-            
+
             var sqlBuilderWithAlias = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault, tableNameOrderAlias)
                                           .Where(x => x.Status == OrderStatus.Paid && x.CustomerId == 1, tableNameOrderAlias)
                                           .Where<CustomerDataModel>(x => x.Type == CustomerType.B2B, tableNameCustomerAlias);
