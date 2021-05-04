@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "FluentSqlBuilder.Playground": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

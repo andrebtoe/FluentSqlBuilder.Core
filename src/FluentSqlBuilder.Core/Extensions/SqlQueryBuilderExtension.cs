@@ -112,11 +112,12 @@ namespace SqlBuilderFluent.Core.Extensions
             return charsSplitColumns;
         }
 
-        public string GetColumnsToAppendSelectFromTableType(string tableName)
+        public string GetColumnsToAppendSelectFromTableType(string tableName, Type? typeTable = null)
         {
             var charsSplitColumns = GetCharsSplitColumns();
             var tableNameWithConvention = _sqlAdapter.GetTableName(tableName);
-            var propertiesFromClassTable = _typeTable.GetProperties();
+            var typeTableToUse = typeTable != null ? typeTable : _typeTable;
+            var propertiesFromClassTable = typeTableToUse.GetProperties();
             var columnsToAppend = propertiesFromClassTable.Select(c =>
             {
                 var columnName = SqlBuilderFluentHelper.GetColumnName(c);

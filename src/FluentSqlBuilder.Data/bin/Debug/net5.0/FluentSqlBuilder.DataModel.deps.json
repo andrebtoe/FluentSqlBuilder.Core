@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "FluentSqlBuilder.DataModel/1.0.0": {
+        "runtime": {
+          "FluentSqlBuilder.DataModel.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "FluentSqlBuilder.DataModel/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
