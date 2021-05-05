@@ -1549,7 +1549,7 @@
           "lib/netstandard2.0/z.Data.Standard.dll": {}
         }
       },
-      "FluentSqlBuilder.Core/1.0.5": {
+      "FluentSqlBuilder.Core/1.0.6": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "compile": {
@@ -5675,7 +5675,7 @@
         "z.data.standard.nuspec"
       ]
     },
-    "FluentSqlBuilder.Core/1.0.5": {
+    "FluentSqlBuilder.Core/1.0.6": {
       "type": "project",
       "path": "../FluentSqlBuilder.Core/FluentSqlBuilder.Core.csproj",
       "msbuildProject": "../FluentSqlBuilder.Core/FluentSqlBuilder.Core.csproj"
@@ -5693,7 +5693,7 @@
       "EasyDapper.MsSqlServer >= 1.0.0-CI-20190214-110506",
       "ExpressionBuilderNetCore >= 1.1.0",
       "FluentSqlBuilder >= 1.0.0-alpha",
-      "FluentSqlBuilder.Core >= 1.0.5",
+      "FluentSqlBuilder.Core >= 1.0.6",
       "FluentSqlBuilder.Data >= 1.0.0",
       "LambdicSql.SqlServer >= 0.29.0",
       "Microsoft.Extensions.Configuration >= 5.0.0",
