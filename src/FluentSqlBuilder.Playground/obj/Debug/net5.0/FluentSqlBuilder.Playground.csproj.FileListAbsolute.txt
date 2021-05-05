@@ -1,0 +1,3 @@
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.Playground/obj/Debug/net5.0/FluentSqlBuilder.Playground.dll
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.Playground/obj/Debug/net5.0/ref/FluentSqlBuilder.Playground.dll
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.Playground/obj/Debug/net5.0/FluentSqlBuilder.Playground.pdb

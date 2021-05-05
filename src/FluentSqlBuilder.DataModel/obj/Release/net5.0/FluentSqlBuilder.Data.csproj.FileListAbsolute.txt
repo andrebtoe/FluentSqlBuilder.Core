@@ -1,0 +1,12 @@
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.DataModel/bin/Release/net5.0/FluentSqlBuilder.Data.deps.json
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.DataModel/bin/Release/net5.0/FluentSqlBuilder.Data.dll
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.DataModel/bin/Release/net5.0/ref/FluentSqlBuilder.Data.dll
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.DataModel/bin/Release/net5.0/FluentSqlBuilder.Data.pdb
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.DataModel/obj/Release/net5.0/FluentSqlBuilder.Data.csprojAssemblyReference.cache
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.DataModel/obj/Release/net5.0/FluentSqlBuilder.Data.GeneratedMSBuildEditorConfig.editorconfig
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.DataModel/obj/Release/net5.0/FluentSqlBuilder.Data.AssemblyInfoInputs.cache
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.DataModel/obj/Release/net5.0/FluentSqlBuilder.Data.AssemblyInfo.cs
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.DataModel/obj/Release/net5.0/FluentSqlBuilder.Data.csproj.CoreCompileInputs.cache
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.DataModel/obj/Release/net5.0/FluentSqlBuilder.Data.dll
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.DataModel/obj/Release/net5.0/ref/FluentSqlBuilder.Data.dll
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.DataModel/obj/Release/net5.0/FluentSqlBuilder.Data.pdb

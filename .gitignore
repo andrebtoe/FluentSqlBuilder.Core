@@ -38,3 +38,21 @@ src/obj/Debug/
 
 src/obj/Docker/
 >>>>>>> develop
+
+src/bin/Debug/
+
+src/FluentSqlBuilder.DataModel/bin/Release/FluentSqlBuilder.Data.1.0.0.nupkg
+
+src/FluentSqlBuilder.DataModel/bin/Release/net5.0/FluentSqlBuilder.Data.deps.json
+
+src/FluentSqlBuilder.DataModel/bin/Release/net5.0/FluentSqlBuilder.Data.dll
+
+src/FluentSqlBuilder.DataModel/bin/Release/net5.0/FluentSqlBuilder.Data.pdb
+
+src/FluentSqlBuilder.DataModel/bin/Release/net5.0/ref/FluentSqlBuilder.Data.dll
+
+src/packages-microsoft-prod.deb
+
+src/packages-microsoft-prod.deb.1
+
+src/packages-microsoft-prod.deb.2

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>FluentSqlBuilder.Playground</id>
+    <version>1.0.1</version>
+    <authors>FluentSqlBuilder.Playground</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Package to generate SQL queries. Group by, COUNT, AVG, MAX, MIN, ORDER BY, and more.
+
+This package is only responsible for generating the select command, it does not intermediate the execution of the query.
+
+This package is only responsible for generating the select command, it does not intermediate the execution of the query.</description>
+    <repository url="https://github.com/andrebtoe/FluentSqlBuilder" />
+    <dependencies>
+      <group targetFramework="net5.0">
+        <dependency id="FluentSqlBuilder.Core" version="1.0.1" exclude="Build,Analyzers" />
+        <dependency id="FluentSqlBuilder.DataModel" version="1.0.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\develop\Publicos\fluent-sql-builder\src\FluentSqlBuilder.Playground\bin\Debug\net5.0\FluentSqlBuilder.Playground.runtimeconfig.json" target="lib\net5.0\FluentSqlBuilder.Playground.runtimeconfig.json" />
+    <file src="C:\develop\Publicos\fluent-sql-builder\src\FluentSqlBuilder.Playground\bin\Debug\net5.0\FluentSqlBuilder.Playground.dll" target="lib\net5.0\FluentSqlBuilder.Playground.dll" />
+  </files>
+</package>
