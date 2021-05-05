@@ -32,40 +32,25 @@ jobs:
       run: dotnet test FluentSqlBuilder.sln --no-build --verbosity normal
       working-directory: src
 
-    - name: Inject slug/short variables
-      uses: rlespinasse/github-slug-action@v3.x
-
-    - name: Print slug/short variables
-      run: |
-        echo "Slug variables"
-        echo " - ${{ env.GITHUB_REF_SLUG }}"    
-        echo " - ${{ env.GITHUB_HEAD_REF_SLUG }}"
-        echo " - ${{ env.GITHUB_BASE_REF_SLUG }}"
-        echo " - ${{ env.GITHUB_REPOSITORY_SLUG }}"
-        # output e.g. : master feat-new-feature v1.0.0 product-1.0.0-rc.2 new-awesome-product
-        echo "Slug URL variables"
-        echo " - ${{ env.GITHUB_REF_SLUG_URL }}"
-        echo " - ${{ env.GITHUB_HEAD_REF_SLUG_URL }}"
-        echo " - ${{ env.GITHUB_BASE_REF_SLUG_URL }}"
-        echo " - ${{ env.GITHUB_REPOSITORY_SLUG_URL }}"
-        # output e.g. : master feat-new-feature v1-0-0 product-1-0-0-rc-2 new-awesome-product
-        echo "Short SHA variables"
-        echo " - ${{ env.GITHUB_SHA_SHORT }}"
-        # output e.g. : ffac537e
-
-    - name: Set VERSION variable from tag
-      run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
-
-    - name: Pack
-      run: dotnet pack FluentSqlBuilder.sln --configuration Release /p:Version=${VERSION} --output .
-      working-directory: src
-    
-    - name: Push
-      run: dotnet nuget push FluentSqlBuilder.Core/bin/Release/FluentSqlBuilder.Core.${VERSION}.nupkg --source https://nuget.pkg.github.com/acraven/index.json --api-key ${{ secrets.GITHUB_TOKEN }}
-      working-directory: src
-      env:
-        GITHUB_TOKEN: ${{ secrets.NUGET_API_KEY }}
-
+    - name: Publish NuGet
+      uses: rohith/publish-nuget@v2.3.0
+      with:
+        # Filepath of the project to be packaged, relative to root of repository
+        PROJECT_FILE_PATH: src/FluentSqlBuilder.Core/FluentSqlBuilder.Core.csproj
+        # NuGet package id to check against version changes, defaults to project name
+        #PACKAGE_NAME: # optional
+        # Filepath containing version info, relative to root of repository
+        #VERSION_FILE_PATH: # optional
+        # Regex pattern to extract version info in a capturing group
+        #VERSION_REGEX: # optional, default is <Version>(.*)<\/Version>
+        # Static version, useful for external providers like Nerdbank.GitVersioning
+        #VERSION_STATIC: # optional
+        # Flag to enable / disable git tagging
+        TAG_COMMIT: false # optional, default is true
+        # Format of the git tag, `[*]` gets replaced with version
+        #TAG_FORMAT: # optional, default is v*
+        # API key for the NuGet feed
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }} # optional
 
 
 
