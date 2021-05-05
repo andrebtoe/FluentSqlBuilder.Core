@@ -32,12 +32,29 @@ jobs:
       run: dotnet test FluentSqlBuilder.sln --no-build --verbosity normal
       working-directory: src
 
+    - name: Inject slug/short variables
+      uses: rlespinasse/github-slug-action@v3.x
+
+    - name: Print slug/short variables
+      run: |
+        echo "Slug variables"
+        echo " - ${{ env.GITHUB_REF_SLUG }}"    
+        echo " - ${{ env.GITHUB_HEAD_REF_SLUG }}"
+        echo " - ${{ env.GITHUB_BASE_REF_SLUG }}"
+        echo " - ${{ env.GITHUB_REPOSITORY_SLUG }}"
+        # output e.g. : master feat-new-feature v1.0.0 product-1.0.0-rc.2 new-awesome-product
+        echo "Slug URL variables"
+        echo " - ${{ env.GITHUB_REF_SLUG_URL }}"
+        echo " - ${{ env.GITHUB_HEAD_REF_SLUG_URL }}"
+        echo " - ${{ env.GITHUB_BASE_REF_SLUG_URL }}"
+        echo " - ${{ env.GITHUB_REPOSITORY_SLUG_URL }}"
+        # output e.g. : master feat-new-feature v1-0-0 product-1-0-0-rc-2 new-awesome-product
+        echo "Short SHA variables"
+        echo " - ${{ env.GITHUB_SHA_SHORT }}"
+        # output e.g. : ffac537e
+
     - name: Set VERSION variable from tag
       run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
-
-    - name: Print Version
-      run: echo ${{ VERSION }}
-      working-directory: src
 
     - name: Pack
       run: dotnet pack FluentSqlBuilder.sln --configuration Release /p:Version=${VERSION} --output .
