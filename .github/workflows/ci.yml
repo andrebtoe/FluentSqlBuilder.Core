@@ -25,7 +25,7 @@ jobs:
       working-directory: src
     
     - name: Build
-      run: dotnet build FluentSqlBuilder.sln --no-restore
+      run: dotnet build FluentSqlBuilder.sln --no-restore --no-incremental
       working-directory: src
     
     - name: Test
