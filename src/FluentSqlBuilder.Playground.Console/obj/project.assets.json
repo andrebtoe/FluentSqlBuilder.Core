@@ -851,11 +851,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\develop\\Publicos\\fluent-sql-builder\\src\\FluentSqlBuilder.Playground\\FluentSqlBuilder.Playground.Console.csproj",
+      "projectUniqueName": "C:\\develop\\Publicos\\fluent-sql-builder\\src\\FluentSqlBuilder.Playground.Console\\FluentSqlBuilder.Playground.Console.csproj",
       "projectName": "FluentSqlBuilder.Playground.Console",
-      "projectPath": "C:\\develop\\Publicos\\fluent-sql-builder\\src\\FluentSqlBuilder.Playground\\FluentSqlBuilder.Playground.Console.csproj",
+      "projectPath": "C:\\develop\\Publicos\\fluent-sql-builder\\src\\FluentSqlBuilder.Playground.Console\\FluentSqlBuilder.Playground.Console.csproj",
       "packagesPath": "C:\\Users\\Andre\\.nuget\\packages\\",
-      "outputPath": "C:\\develop\\Publicos\\fluent-sql-builder\\src\\FluentSqlBuilder.Playground\\obj\\",
+      "outputPath": "C:\\develop\\Publicos\\fluent-sql-builder\\src\\FluentSqlBuilder.Playground.Console\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Andre\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentSqlBuilder.Core", "Fl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentSqlBuilder.Test.Unit", "FluentSqlBuilder.Test.Unit\FluentSqlBuilder.Test.Unit.csproj", "{B1C2BF5A-D3F3-4ADE-AB97-963D72D6F253}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentSqlBuilder.Playground.Console", "FluentSqlBuilder.Playground\FluentSqlBuilder.Playground.Console.csproj", "{DCA989D0-8FFA-4FFC-86A8-2CFC61779B44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentSqlBuilder.Playground.Console", "FluentSqlBuilder.Playground.Console\FluentSqlBuilder.Playground.Console.csproj", "{DCA989D0-8FFA-4FFC-86A8-2CFC61779B44}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentSqlBuilder.Data", "FluentSqlBuilder.DataModel\FluentSqlBuilder.Data.csproj", "{D36409DB-897E-4107-904C-DFA5E37CC1B9}"
 EndProject
