@@ -1,0 +1,1 @@
+/mnt/c/develop/Publicos/fluent-sql-builder/src/obj/Debug/docker-compose.dcproj.CoreCompileInputs.cache
