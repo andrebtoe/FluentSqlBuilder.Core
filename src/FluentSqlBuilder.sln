@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentSqlBuilder.Data", "Fl
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{FCE108B6-1751-4B77-B5F5-F7AC55B0F539}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentSqlBuilder.Playground.Web", "..\FluentSqlBuilder.Playground.Web\FluentSqlBuilder.Playground.Web.csproj", "{843A259B-6341-407F-A72E-B617969AA74A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentSqlBuilder.Playground.Web", "FluentSqlBuilder.Playground.Web\FluentSqlBuilder.Playground.Web.csproj", "{843A259B-6341-407F-A72E-B617969AA74A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Playground", "Playground", "{7F65AC9B-2386-49E7-8426-91027E1755E1}"
 EndProject
