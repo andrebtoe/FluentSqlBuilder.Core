@@ -1,10 +1,7 @@
 ﻿using Dapper;
-using FluentSqlBuilder.Core.Middlewares.Inputs;
-using FluentSqlBuilder.Core.Middlewares.Services;
 using FluentSqlBuilder.Data.DataModel;
 using FluentSqlBuilder.Playground;
-using SqlBuilderFluent.Lambdas.Inputs;
-using SqlBuilderFluent.Types;
+using FluentSqlBuilder.Playground.Shared.Repository;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -15,11 +12,6 @@ namespace SqlBuilderFluent.Playground
     public class Program
     {
         private readonly static bool _executeInBD = true;
-        private readonly static FluentSqlBuilderMiddlewareOptions _fluentSqlBuilderMiddlewareOptions = new FluentSqlBuilderMiddlewareOptions()
-        {
-            SqlAdapterType = SqlAdapterType.SqlServer2019,
-            Formatting = SqlBuilderFormatting.Indented
-        };
 
         static void Main()
         {
@@ -44,55 +36,55 @@ namespace SqlBuilderFluent.Playground
                     switch (numberMenuParse)
                     {
                         case 1:
-                            fluentSqlBuilderOrder = SelectSimple01();
+                            fluentSqlBuilderOrder = FluentSqlBuilderRepository.SelectSimple01();
                             break;
                         case 2:
-                            fluentSqlBuilderCustomer = SelectWithInnerJoin02();
+                            fluentSqlBuilderCustomer = FluentSqlBuilderRepository.SelectWithInnerJoin02();
                             break;
                         case 3:
-                            fluentSqlBuilderCustomer = SelectWithLeftJoin03();
+                            fluentSqlBuilderCustomer = FluentSqlBuilderRepository.SelectWithLeftJoin03();
                             break;
                         case 4:
-                            fluentSqlBuilderCustomer = SelectWithRightJoin04();
+                            fluentSqlBuilderCustomer = FluentSqlBuilderRepository.SelectWithRightJoin04();
                             break;
                         case 5:
-                            fluentSqlBuilderOrder = SelectWithWhere05();
+                            fluentSqlBuilderOrder = FluentSqlBuilderRepository.SelectWithWhere05();
                             break;
                         case 6:
-                            fluentSqlBuilderCustomer = SelectWithWhereAndInnerJoin06_01();
+                            fluentSqlBuilderCustomer = FluentSqlBuilderRepository.SelectWithWhereAndInnerJoin06_01();
                             break;
                         case 7:
-                            fluentSqlBuilderCustomer = SelectWithWhereAndInnerJoin07_02();
+                            fluentSqlBuilderCustomer = FluentSqlBuilderRepository.SelectWithWhereAndInnerJoin07_02();
                             break;
                         case 8:
-                            fluentSqlBuilderOrder = SelectWithOrderBy08();
+                            fluentSqlBuilderOrder = FluentSqlBuilderRepository.SelectWithOrderBy08();
                             break;
                         case 9:
-                            fluentSqlBuilderOrder = SelectWithOrderByDescendingBy09();
+                            fluentSqlBuilderOrder = FluentSqlBuilderRepository.SelectWithOrderByDescendingBy09();
                             break;
                         case 10:
-                            fluentSqlBuilderOrder = SelectWithGroupBy10();
+                            fluentSqlBuilderOrder = FluentSqlBuilderRepository.SelectWithGroupBy10();
                             break;
                         case 11:
-                            fluentSqlBuilderOrder = SelectWithGroupByAndHaving11();
+                            fluentSqlBuilderOrder = FluentSqlBuilderRepository.SelectWithGroupByAndHaving11();
                             break;
                         case 12:
-                            fluentSqlBuilderOrder = SelectWithProjection12();
+                            fluentSqlBuilderOrder = FluentSqlBuilderRepository.SelectWithProjection12();
                             break;
                         case 13:
-                            fluentSqlBuilderOrder = SelectWithLimit13();
+                            fluentSqlBuilderOrder = FluentSqlBuilderRepository.SelectWithLimit13();
                             break;
                         case 14:
-                            fluentSqlBuilderOrder = SelectWithPagination14();
+                            fluentSqlBuilderOrder = FluentSqlBuilderRepository.SelectWithPagination14();
                             break;
                         case 15:
-                            fluentSqlBuilderOrder = SelectWithAlias15();
+                            fluentSqlBuilderOrder = FluentSqlBuilderRepository.SelectWithAlias15();
                             break;
                         case 16:
-                            fluentSqlBuilderCustomer = SelectWithFull16();
+                            fluentSqlBuilderCustomer = FluentSqlBuilderRepository.SelectWithFull16();
                             break;
                         case 17:
-                            fluentSqlBuilderOrder = SelectWithDistinct17();
+                            fluentSqlBuilderOrder = FluentSqlBuilderRepository.SelectWithDistinct17();
                             break;
                         default:
                             throw new ArgumentException("Number invalid");
@@ -213,169 +205,6 @@ namespace SqlBuilderFluent.Playground
             }
 
             return data;
-        }
-
-        private static FluentSqlBuilder<OrderDataModel> SelectSimple01()
-        {
-            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions).From<OrderDataModel>();
-
-            return sqlBuilder;
-        }
-
-        private static FluentSqlBuilder<CustomerDataModel> SelectWithInnerJoin02()
-        {
-            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
-                                 .From<OrderDataModel>()
-                                 .InnerJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id);
-
-            return sqlBuilder;
-        }
-
-        private static FluentSqlBuilder<CustomerDataModel> SelectWithLeftJoin03()
-        {
-            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
-                                 .From<OrderDataModel>()
-                                 .LeftJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id);
-
-            return sqlBuilder;
-        }
-
-        private static FluentSqlBuilder<CustomerDataModel> SelectWithRightJoin04()
-        {
-            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
-                                 .From<OrderDataModel>()
-                                 .RightJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id);
-
-            return sqlBuilder;
-        }
-
-        private static FluentSqlBuilder<OrderDataModel> SelectWithWhere05()
-        {
-            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
-                                 .From<OrderDataModel>()
-                                 .Where(x => x.Status == OrderStatus.Paid && x.CustomerId == 1);
-
-            return sqlBuilder;
-        }
-
-        private static FluentSqlBuilder<CustomerDataModel> SelectWithWhereAndInnerJoin06_01()
-        {
-            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
-                                 .From<OrderDataModel>()
-                                 .Where(x => x.Status == OrderStatus.Paid && x.CustomerId == 1)
-                                 .Where<CustomerDataModel>(x => x.Type == CustomerType.B2B)
-                                 .InnerJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id);
-
-            return sqlBuilder;
-        }
-
-        private static FluentSqlBuilder<CustomerDataModel> SelectWithWhereAndInnerJoin07_02()
-        {
-            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
-                                 .From<OrderDataModel>()
-                                 .Where(x => x.Status == OrderStatus.Paid && x.CustomerId == 1)
-                                 .InnerJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id)
-                                 .Where(x => x.Type == CustomerType.B2B);
-
-            return sqlBuilder;
-        }
-
-        private static FluentSqlBuilder<OrderDataModel> SelectWithOrderBy08()
-        {
-            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
-                                 .From<OrderDataModel>()
-                                 .OrderBy(x => x.CustomerId);
-
-            return sqlBuilder;
-        }
-
-        private static FluentSqlBuilder<OrderDataModel> SelectWithOrderByDescendingBy09()
-        {
-            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
-                                 .From<OrderDataModel>()
-                                 .OrderByDescending(x => x.CustomerId);
-
-            return sqlBuilder;
-        }
-
-        private static FluentSqlBuilder<OrderDataModel> SelectWithGroupBy10()
-        {
-            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
-                                 .From<OrderDataModel>()
-                                 .Min(x => x.CustomerId)
-                                 .GroupBy(x => x.CustomerId);
-
-            return sqlBuilder;
-        }
-
-        private static FluentSqlBuilder<OrderDataModel> SelectWithGroupByAndHaving11()
-        {
-            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
-                                 .From<OrderDataModel>()
-                                 .Min(x => x.CustomerId)
-                                 .GroupBy(x => x.CustomerId)
-                                 .Having(SelectFunction.Min, x => x.CustomerId > 1);
-
-            return sqlBuilder;
-        }
-
-        private static FluentSqlBuilder<OrderDataModel> SelectWithProjection12()
-        {
-            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
-                                 .From<OrderDataModel>()
-                                 .Projection(x => new { x.Id, x.Status });
-
-            return sqlBuilder;
-        }
-
-        private static FluentSqlBuilder<OrderDataModel> SelectWithLimit13()
-        {
-            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
-                                 .From<OrderDataModel>()
-                                 .Limit(10);
-
-            return sqlBuilder;
-        }
-
-        private static FluentSqlBuilder<OrderDataModel> SelectWithPagination14()
-        {
-            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
-                                 .From<OrderDataModel>()
-                                 .OrderBy(x => x.Id)
-                                 .Pagination(10, 1);
-
-            return sqlBuilder;
-        }
-
-        private static FluentSqlBuilder<OrderDataModel> SelectWithAlias15()
-        {
-            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
-                                 .From<OrderDataModel>("order_alias");
-
-            return sqlBuilder;
-        }
-
-        private static FluentSqlBuilder<CustomerDataModel> SelectWithFull16()
-        {
-            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
-                                   .From<OrderDataModel>("order_alias")
-                                   .Projection((orderDataModel) => new { orderDataModel.CustomerId }, "order_alias")
-                                   .Projection<CustomerDataModel>((customer) => customer, "customer_alias")
-                                   .Where(x => x.Status == OrderStatus.Paid && x.CustomerId == 1)
-                                   .InnerJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id, "customer_alias")
-                                   .OrderBy(x => x.Id)
-                                   .Limit(10);
-
-            return sqlBuilder;
-        }
-
-        private static FluentSqlBuilder<OrderDataModel> SelectWithDistinct17()
-        {
-            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
-                                 .From<OrderDataModel>()
-                                 .Distinct(x => x.CustomerId);
-
-            return sqlBuilder;
         }
     }
 }

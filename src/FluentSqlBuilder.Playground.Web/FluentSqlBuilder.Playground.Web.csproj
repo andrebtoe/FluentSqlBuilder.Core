@@ -8,6 +8,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FluentSqlBuilder.Core\FluentSqlBuilder.Core.csproj" />
     <ProjectReference Include="..\FluentSqlBuilder.DataModel\FluentSqlBuilder.Data.csproj" />
+    <ProjectReference Include="..\FluentSqlBuilder.Playground.Shared\FluentSqlBuilder.Playground.Shared.csproj" />
   </ItemGroup>
 
 </Project>

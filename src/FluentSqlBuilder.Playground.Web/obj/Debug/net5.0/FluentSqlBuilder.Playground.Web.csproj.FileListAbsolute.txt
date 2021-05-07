@@ -87,3 +87,5 @@ C:\develop\Publicos\fluent-sql-builder\src\FluentSqlBuilder.Playground.Web\obj\D
 C:\develop\Publicos\fluent-sql-builder\src\FluentSqlBuilder.Playground.Web\obj\Debug\net5.0\ref\FluentSqlBuilder.Playground.Web.dll
 C:\develop\Publicos\fluent-sql-builder\src\FluentSqlBuilder.Playground.Web\obj\Debug\net5.0\FluentSqlBuilder.Playground.Web.pdb
 C:\develop\Publicos\fluent-sql-builder\src\FluentSqlBuilder.Playground.Web\obj\Debug\net5.0\FluentSqlBuilder.Playground.Web.genruntimeconfig.cache
+C:\develop\Publicos\fluent-sql-builder\src\FluentSqlBuilder.Playground.Web\bin\Debug\net5.0\FluentSqlBuilder.Playground.Shared.dll
+C:\develop\Publicos\fluent-sql-builder\src\FluentSqlBuilder.Playground.Web\bin\Debug\net5.0\FluentSqlBuilder.Playground.Shared.pdb

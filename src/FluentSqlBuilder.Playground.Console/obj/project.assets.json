@@ -261,6 +261,20 @@
         "runtime": {
           "bin/placeholder/FluentSqlBuilder.Data.dll": {}
         }
+      },
+      "FluentSqlBuilder.Playground.Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "FluentSqlBuilder.Core": "1.0.6",
+          "FluentSqlBuilder.Data": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/FluentSqlBuilder.Playground.Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FluentSqlBuilder.Playground.Shared.dll": {}
+        }
       }
     }
   },
@@ -833,6 +847,11 @@
       "type": "project",
       "path": "../FluentSqlBuilder.DataModel/FluentSqlBuilder.Data.csproj",
       "msbuildProject": "../FluentSqlBuilder.DataModel/FluentSqlBuilder.Data.csproj"
+    },
+    "FluentSqlBuilder.Playground.Shared/1.0.0": {
+      "type": "project",
+      "path": "../FluentSqlBuilder.Playground.Shared/FluentSqlBuilder.Playground.Shared.csproj",
+      "msbuildProject": "../FluentSqlBuilder.Playground.Shared/FluentSqlBuilder.Playground.Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -840,6 +859,7 @@
       "Dapper >= 2.0.90",
       "FluentSqlBuilder.Core >= 1.0.6",
       "FluentSqlBuilder.Data >= 1.0.0",
+      "FluentSqlBuilder.Playground.Shared >= 1.0.0",
       "Microsoft.Extensions.Configuration >= 5.0.0",
       "Microsoft.VisualStudio.Azure.Containers.Tools.Targets >= 1.10.13",
       "System.Data.SqlClient >= 4.8.2"
@@ -877,6 +897,9 @@
             },
             "C:\\develop\\Publicos\\fluent-sql-builder\\src\\FluentSqlBuilder.DataModel\\FluentSqlBuilder.Data.csproj": {
               "projectPath": "C:\\develop\\Publicos\\fluent-sql-builder\\src\\FluentSqlBuilder.DataModel\\FluentSqlBuilder.Data.csproj"
+            },
+            "C:\\develop\\Publicos\\fluent-sql-builder\\src\\FluentSqlBuilder.Playground.Shared\\FluentSqlBuilder.Playground.Shared.csproj": {
+              "projectPath": "C:\\develop\\Publicos\\fluent-sql-builder\\src\\FluentSqlBuilder.Playground.Shared\\FluentSqlBuilder.Playground.Shared.csproj"
             }
           }
         }

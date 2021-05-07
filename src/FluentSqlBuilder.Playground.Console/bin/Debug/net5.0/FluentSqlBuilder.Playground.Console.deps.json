@@ -11,6 +11,7 @@
           "Dapper": "2.0.90",
           "FluentSqlBuilder.Core": "1.0.6",
           "FluentSqlBuilder.Data": "1.0.0",
+          "FluentSqlBuilder.Playground.Shared": "1.0.0",
           "Microsoft.Extensions.Configuration": "5.0.0",
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.10.13",
           "System.Data.SqlClient": "4.8.2"
@@ -192,6 +193,15 @@
         "runtime": {
           "FluentSqlBuilder.Data.dll": {}
         }
+      },
+      "FluentSqlBuilder.Playground.Shared/1.0.0": {
+        "dependencies": {
+          "FluentSqlBuilder.Core": "1.0.6",
+          "FluentSqlBuilder.Data": "1.0.0"
+        },
+        "runtime": {
+          "FluentSqlBuilder.Playground.Shared.dll": {}
+        }
       }
     }
   },
@@ -340,6 +350,11 @@
       "sha512": ""
     },
     "FluentSqlBuilder.Data/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "FluentSqlBuilder.Playground.Shared/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
