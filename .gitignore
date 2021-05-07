@@ -3,8 +3,6 @@ src/.vs/
 
 src/FluentSqlBuilder/obj/
 
-src/FluentSqlBuilder.Core/
-
 src/FluentSqlBuilder.DataModel/obj/
 
 src/FluentSqlBuilder.Test.Unit/bin/
@@ -20,3 +18,11 @@ src/FluentSqlBuilder.DataModel/bin/Debug/net5.0/
 src/FluentSqlBuilder.Playground/bin/Debug/
 
 
+
+src/FluentSqlBuilder.Core/bin/Debug/
+
+src/FluentSqlBuilder.Core/bin/Release/net5.0/
+
+src/FluentSqlBuilder.Core/obj/Debug/
+
+src/FluentSqlBuilder.Core/obj/Release/net5.0/ref/
