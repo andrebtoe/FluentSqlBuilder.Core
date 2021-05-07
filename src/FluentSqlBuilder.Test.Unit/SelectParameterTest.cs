@@ -1,5 +1,6 @@
-﻿using FluentSqlBuilder.Data.DataModel;
-using SqlBuilderFluent;
+﻿using FluentSqlBuilder.Core.Middlewares.Inputs;
+using FluentSqlBuilder.Core.Middlewares.Services;
+using FluentSqlBuilder.Data.DataModel;
 using SqlBuilderFluent.Types;
 using Xunit;
 
@@ -7,14 +8,18 @@ namespace FluentSqlBuilder.Test.Unit
 {
     public class SelectParameterTest
     {
-        private readonly static SqlAdapterType _typeDefault = SqlAdapterType.SqlServer2019;
-        private readonly static SqlBuilderFormatting _formattingDefault = SqlBuilderFormatting.Indented;
+        private readonly static FluentSqlBuilderMiddlewareOptions _fluentSqlBuilderMiddlewareOptions = new FluentSqlBuilderMiddlewareOptions()
+        {
+            SqlAdapterType = SqlAdapterType.SqlServer2019,
+            Formatting = SqlBuilderFormatting.Indented
+        };
 
         [Fact]
         public void Test_Select_Parameters_Case01()
         {
             // Arrange
-            var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
+                                 .From<OrderDataModel>()
                                  .Where(x => x.CustomerId == 1 && x.Status == OrderStatus.AwaitingPayment)
                                  .Where(x => x.Id > 0)
                                  .InnerJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id)
@@ -31,7 +36,8 @@ namespace FluentSqlBuilder.Test.Unit
         public void Test_Select_Parameters_Case02()
         {
             // Arrange
-            var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
+                                 .From<OrderDataModel>()
                                  .Where(x => x.CustomerId == 1 && x.Status == OrderStatus.AwaitingPayment)
                                  .Where(x => x.Id > 0)
                                  .InnerJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id)
@@ -49,7 +55,8 @@ namespace FluentSqlBuilder.Test.Unit
         public void Test_Select_Parameters_Case03()
         {
             // Arrange
-            var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
+                                 .From<OrderDataModel>()
                                  .Where(x => x.CustomerId == 1 && x.Status == OrderStatus.AwaitingPayment)
                                  .Where(x => x.Id > 0)
                                  .InnerJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id)

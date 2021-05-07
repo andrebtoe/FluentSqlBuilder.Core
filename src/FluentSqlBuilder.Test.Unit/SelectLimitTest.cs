@@ -1,5 +1,6 @@
-﻿using FluentSqlBuilder.Data.DataModel;
-using SqlBuilderFluent;
+﻿using FluentSqlBuilder.Core.Middlewares.Inputs;
+using FluentSqlBuilder.Core.Middlewares.Services;
+using FluentSqlBuilder.Data.DataModel;
 using SqlBuilderFluent.Types;
 using Xunit;
 
@@ -7,8 +8,11 @@ namespace FluentSqlBuilder.Test.Unit
 {
     public class SelectLimitTest
     {
-        private readonly static SqlAdapterType _typeDefault = SqlAdapterType.SqlServer2019;
-        private readonly static SqlBuilderFormatting _formattingDefault = SqlBuilderFormatting.Indented;
+        private readonly static FluentSqlBuilderMiddlewareOptions _fluentSqlBuilderMiddlewareOptions = new FluentSqlBuilderMiddlewareOptions()
+        {
+            SqlAdapterType = SqlAdapterType.SqlServer2019,
+            Formatting = SqlBuilderFormatting.Indented
+        };
 
         [Fact]
         public void Test_Select_Limit()
@@ -16,7 +20,8 @@ namespace FluentSqlBuilder.Test.Unit
             // Arrange
             var tableName = "order";
             var limit = 10;
-            var sqlBuilderWithoutAlias = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+            var sqlBuilderWithoutAlias = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
+                                             .From<OrderDataModel>()
                                              .Limit(limit);
 
             // Act

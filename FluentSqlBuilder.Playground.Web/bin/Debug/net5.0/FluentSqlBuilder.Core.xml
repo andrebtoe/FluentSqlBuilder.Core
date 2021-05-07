@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FluentSqlBuilder.Core</name>
+    </assembly>
+    <members>
+        <member name="T:SqlBuilderFluent.FluentSqlBuilder`1">
+            <summary>
+            Class to generate sql select with fluent.
+            </summary>
+            <typeparam name="TTable">Table type referenced by generic type.</typeparam>
+        </member>
+        <member name="M:SqlBuilderFluent.FluentSqlBuilder`1.Projection(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.String)">
+            <summary>
+            By default, queries return all columns. To limit, you can include a projection to specify or restrict columns to return.
+            </summary>
+            <param name="columnExp">Indicates projection of columns through expression.</param>
+            <param name="tableAlias">Use this parameter when it is necessary to reference the table by alias.</param>
+            <returns>Returns the instance of FluentSqlBuilder.</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Projection``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Pagination(System.Int32,System.Nullable{System.Int32})" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Limit(System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Distinct(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.String,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Distinct``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.String,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Where(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Where``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.And(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.And``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Or(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Or``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.In(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Collections.Generic.List{System.Object},System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.In``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.Collections.Generic.List{System.Object},System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.NotIn(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Collections.Generic.List{System.Object},System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.NotIn``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.Collections.Generic.List{System.Object},System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.OrderBy(System.String,System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.OrderBy(System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.OrderBy``1(System.String,System.Linq.Expressions.Expression{System.Func{``0,System.Object}}[])" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.OrderBy``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}}[])" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.OrderByDescending(System.String,System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.OrderByDescending(System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.OrderByDescending``1(System.String,System.Linq.Expressions.Expression{System.Func{``0,System.Object}}[])" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.OrderByDescending``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}}[])" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Count" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Count(System.String,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Count``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.String,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Count(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.String,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Sum(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.String,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Sum``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.String,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Max(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.String,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Max``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.String,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Min(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.String,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Min``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.String,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Avg(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.String,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Avg``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.String,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.InnerJoin``1(System.Linq.Expressions.Expression{System.Func{`0,``0,System.Boolean}},System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.InnerJoin``2(System.Linq.Expressions.Expression{System.Func{``0,``1,System.Boolean}},System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.LeftJoin``1(System.Linq.Expressions.Expression{System.Func{`0,``0,System.Boolean}},System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.LeftJoin``2(System.Linq.Expressions.Expression{System.Func{``0,``1,System.Boolean}},System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.RightJoin``1(System.Linq.Expressions.Expression{System.Func{`0,``0,System.Boolean}},System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.RightJoin``2(System.Linq.Expressions.Expression{System.Func{``0,``1,System.Boolean}},System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.GroupBy(System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.GroupBy(System.String,System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.GroupBy``1(System.String,System.Linq.Expressions.Expression{System.Func{``0,System.Object}}[])" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.GroupBy``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}}[])" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Having(SqlBuilderFluent.Lambdas.Inputs.SelectFunction,System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:SqlBuilderFluent.FluentSqlBuilder`1.Having``1(SqlBuilderFluent.Lambdas.Inputs.SelectFunction,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)" -->
+        <member name="M:SqlBuilderFluent.FluentSqlBuilder`1.ToString">
+            <summary>
+            Override method to generate final select string.
+            </summary>
+            <returns>Returns select ready to run in the database, with necessary parameters.</returns>
+        </member>
+    </members>
+</doc>

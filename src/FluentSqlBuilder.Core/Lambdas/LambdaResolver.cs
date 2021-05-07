@@ -1,5 +1,5 @@
 ﻿using FluentSqlBuilder.Core.Inputs;
-using SqlBuilderFluent.Core.Extensions;
+using SqlBuilderFluent.Core.Extensions.Common;
 using SqlBuilderFluent.Exceptions;
 using SqlBuilderFluent.Helpers;
 using SqlBuilderFluent.Inputs;

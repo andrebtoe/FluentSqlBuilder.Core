@@ -1,4 +1,6 @@
-﻿using FluentSqlBuilder.Data.DataModel;
+﻿using FluentSqlBuilder.Core.Middlewares.Inputs;
+using FluentSqlBuilder.Core.Middlewares.Services;
+using FluentSqlBuilder.Data.DataModel;
 using SqlBuilderFluent;
 using SqlBuilderFluent.Inputs;
 using SqlBuilderFluent.Types;
@@ -8,8 +10,11 @@ namespace FluentSqlBuilder.Test.Unit
 {
     public class SelectJoinWithWhereTest
     {
-        private readonly static SqlAdapterType _typeDefault = SqlAdapterType.SqlServer2019;
-        private readonly static SqlBuilderFormatting _formattingDefault = SqlBuilderFormatting.Indented;
+        private readonly static FluentSqlBuilderMiddlewareOptions _fluentSqlBuilderMiddlewareOptions = new FluentSqlBuilderMiddlewareOptions()
+        {
+            SqlAdapterType = SqlAdapterType.SqlServer2019,
+            Formatting = SqlBuilderFormatting.Indented
+        };
 
         [Fact]
         public void Test_Select_InnerJoin()
@@ -37,11 +42,13 @@ namespace FluentSqlBuilder.Test.Unit
             var tableNameOrderAlias = "order_alias";
             var tableNameCustomerAlias = "customer_alias";
             var joinTypeNormalized = joinType.ToString().ToUpper();
-            var sqlBuilderWithoutAlias = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+            var sqlBuilderWithoutAlias = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
+                                             .From<OrderDataModel>()
                                              .Where(x => x.Status == OrderStatus.Paid && x.CustomerId == 1)
                                              .Where<CustomerDataModel>(x => x.Type == CustomerType.B2B);
 
-            var sqlBuilderWithAlias = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault, tableNameOrderAlias)
+            var sqlBuilderWithAlias = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
+                                          .From<OrderDataModel>(tableNameOrderAlias)
                                           .Where(x => x.Status == OrderStatus.Paid && x.CustomerId == 1, tableNameOrderAlias)
                                           .Where<CustomerDataModel>(x => x.Type == CustomerType.B2B, tableNameCustomerAlias);
 

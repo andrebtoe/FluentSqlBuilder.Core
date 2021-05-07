@@ -1,5 +1,6 @@
-﻿using FluentSqlBuilder.Data.DataModel;
-using SqlBuilderFluent;
+﻿using FluentSqlBuilder.Core.Middlewares.Inputs;
+using FluentSqlBuilder.Core.Middlewares.Services;
+using FluentSqlBuilder.Data.DataModel;
 using SqlBuilderFluent.Exceptions;
 using SqlBuilderFluent.Types;
 using Xunit;
@@ -8,8 +9,11 @@ namespace FluentSqlBuilder.Test.Unit
 {
     public class SelectPaginationTest
     {
-        private readonly static SqlAdapterType _typeDefault = SqlAdapterType.SqlServer2019;
-        private readonly static SqlBuilderFormatting _formattingDefault = SqlBuilderFormatting.Indented;
+        private readonly static FluentSqlBuilderMiddlewareOptions _fluentSqlBuilderMiddlewareOptions = new FluentSqlBuilderMiddlewareOptions()
+        {
+            SqlAdapterType = SqlAdapterType.SqlServer2019,
+            Formatting = SqlBuilderFormatting.Indented
+        };
 
         [Fact]
         public void Test_Select_Pagination_Sucess()
@@ -17,11 +21,13 @@ namespace FluentSqlBuilder.Test.Unit
             // Arrange
             var tableName = "order";
             var tableNameAlias = "order_alias";
-            var sqlBuilderWithoutAlias = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+            var sqlBuilderWithoutAlias = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
+                                             .From<OrderDataModel>()
                                              .OrderBy(x => x.CustomerId)
                                              .Pagination(10, 1);
 
-            var sqlBuilderAlias = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault, tableNameAlias)
+            var sqlBuilderAlias = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
+                                      .From<OrderDataModel>(tableNameAlias)
                                       .OrderBy(tableNameAlias, x => x.CustomerId)
                                       .Pagination(10, 1);
 
@@ -51,7 +57,8 @@ namespace FluentSqlBuilder.Test.Unit
         public void Test_Select_Pagination_Fail_Without_OrderBy()
         {
             // Arrange
-            var sqlBuilderWithoutAlias = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+            var sqlBuilderWithoutAlias = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
+                                             .From<OrderDataModel>()
                                              .Pagination(10, 1);
 
             // Assert
