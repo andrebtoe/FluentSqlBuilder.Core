@@ -1,0 +1,14 @@
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.Core/bin/Release/net5.0/FluentSqlBuilder.Core.deps.json
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.Core/bin/Release/net5.0/FluentSqlBuilder.Core.dll
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.Core/bin/Release/net5.0/ref/FluentSqlBuilder.Core.dll
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.Core/bin/Release/net5.0/FluentSqlBuilder.Core.pdb
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.Core/bin/Release/net5.0/FluentSqlBuilder.Core.xml
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.Core/obj/Release/net5.0/FluentSqlBuilder.Core.csprojAssemblyReference.cache
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.Core/obj/Release/net5.0/FluentSqlBuilder.Core.GeneratedMSBuildEditorConfig.editorconfig
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.Core/obj/Release/net5.0/FluentSqlBuilder.Core.AssemblyInfoInputs.cache
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.Core/obj/Release/net5.0/FluentSqlBuilder.Core.AssemblyInfo.cs
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.Core/obj/Release/net5.0/FluentSqlBuilder.Core.csproj.CoreCompileInputs.cache
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.Core/obj/Release/net5.0/FluentSqlBuilder.Core.dll
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.Core/obj/Release/net5.0/ref/FluentSqlBuilder.Core.dll
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.Core/obj/Release/net5.0/FluentSqlBuilder.Core.xml
+/mnt/c/develop/Publicos/fluent-sql-builder/src/FluentSqlBuilder.Core/obj/Release/net5.0/FluentSqlBuilder.Core.pdb

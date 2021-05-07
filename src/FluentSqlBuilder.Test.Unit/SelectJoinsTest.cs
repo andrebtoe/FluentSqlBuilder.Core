@@ -1,5 +1,6 @@
-﻿using FluentSqlBuilder.Data.DataModel;
-using SqlBuilderFluent;
+﻿using FluentSqlBuilder.Core.Middlewares.Inputs;
+using FluentSqlBuilder.Core.Middlewares.Services;
+using FluentSqlBuilder.Data.DataModel;
 using SqlBuilderFluent.Types;
 using Xunit;
 
@@ -7,8 +8,11 @@ namespace FluentSqlBuilder.Test.Unit
 {
     public class SelectJoinsTest
     {
-        private readonly static SqlAdapterType _typeDefault = SqlAdapterType.SqlServer2019;
-        private readonly static SqlBuilderFormatting _formattingDefault = SqlBuilderFormatting.Indented;
+        private readonly static FluentSqlBuilderMiddlewareOptions _fluentSqlBuilderMiddlewareOptions = new FluentSqlBuilderMiddlewareOptions()
+        {
+            SqlAdapterType = SqlAdapterType.SqlServer2019,
+            Formatting = SqlBuilderFormatting.Indented
+        };
 
         [Fact]
         public void Test_Select_InnerJoin_Without_Alias()
@@ -17,7 +21,8 @@ namespace FluentSqlBuilder.Test.Unit
             var tableSchemaName = "checkout";
             var tableNameSource = "order";
             var tableNameTarget = "customer";
-            var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
+                                 .From<OrderDataModel>()
                                  .InnerJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id);
 
             // Act
@@ -39,7 +44,8 @@ namespace FluentSqlBuilder.Test.Unit
             var tableNameSource = "order";
             var tableNameTarget = "customer";
             var tableNameTargetAlias = "customer_alias";
-            var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
+                                 .From<OrderDataModel>()
                                  .InnerJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id, tableNameTargetAlias);
 
             // Act
@@ -60,7 +66,8 @@ namespace FluentSqlBuilder.Test.Unit
             var tableSchemaName = "checkout";
             var tableNameSource = "order";
             var tableNameTarget = "customer";
-            var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
+                                 .From<OrderDataModel>()
                                  .LeftJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id);
 
             // Act
@@ -83,7 +90,8 @@ namespace FluentSqlBuilder.Test.Unit
             var tableNameTarget = "customer";
             var tableNameTargetAlias = "customer_alias";
 
-            var sqlBuilder = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
+                                 .From<OrderDataModel>()
                                  .LeftJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id, tableNameTargetAlias);
 
             // Act

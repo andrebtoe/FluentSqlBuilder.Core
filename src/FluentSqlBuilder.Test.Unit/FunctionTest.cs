@@ -1,4 +1,6 @@
-﻿using FluentSqlBuilder.Data.DataModel;
+﻿using FluentSqlBuilder.Core.Middlewares.Inputs;
+using FluentSqlBuilder.Core.Middlewares.Services;
+using FluentSqlBuilder.Data.DataModel;
 using SqlBuilderFluent;
 using SqlBuilderFluent.Lambdas.Inputs;
 using SqlBuilderFluent.Types;
@@ -81,15 +83,22 @@ namespace FluentSqlBuilder.Test.Unit
         private void TestFunctionSelect(SqlAdapterType sqlAdapterType, SqlBuilderFormatting formatting, SelectFunction selectFunction)
         {
             // Arrange
+            var fluentSqlBuilderMiddlewareOptions = new FluentSqlBuilderMiddlewareOptions()
+            {
+                SqlAdapterType = sqlAdapterType,
+                Formatting = formatting
+            };
             var tableName = "order";
             var tableNameAlias = "order_alias";
             var columnNameAlias = "Quantity";
             var functionName = selectFunction.ToString().ToUpper();
-            var fluentSqlBuilderWithoutAlias = new FluentSqlBuilder<OrderDataModel>(sqlAdapterType, formatting)
+            var fluentSqlBuilderWithoutAlias = new FluentSqlBuilderService(fluentSqlBuilderMiddlewareOptions)
+                                               .From<OrderDataModel>()
                                                .GroupBy(x => x.CustomerId)
                                                .Having(selectFunction, x => x.CustomerId >= 1);
 
-            var fluentSqlBuilderWithAlias = new FluentSqlBuilder<OrderDataModel>(sqlAdapterType, formatting, tableNameAlias)
+            var fluentSqlBuilderWithAlias = new FluentSqlBuilderService(fluentSqlBuilderMiddlewareOptions)
+                                                .From<OrderDataModel>(tableNameAlias)
                                                 .GroupBy(tableNameAlias, x => x.CustomerId)
                                                 .Having(selectFunction, x => x.CustomerId >= 0, tableNameAlias);
 

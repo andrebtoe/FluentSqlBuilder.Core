@@ -1,5 +1,6 @@
-﻿using FluentSqlBuilder.Data.DataModel;
-using SqlBuilderFluent;
+﻿using FluentSqlBuilder.Core.Middlewares.Inputs;
+using FluentSqlBuilder.Core.Middlewares.Services;
+using FluentSqlBuilder.Data.DataModel;
 using SqlBuilderFluent.Types;
 using Xunit;
 
@@ -7,8 +8,11 @@ namespace FluentSqlBuilder.Test.Unit
 {
     public class SelectDistinctTest
     {
-        private readonly static SqlAdapterType _typeDefault = SqlAdapterType.SqlServer2019;
-        private readonly static SqlBuilderFormatting _formattingDefault = SqlBuilderFormatting.Indented;
+        private readonly static FluentSqlBuilderMiddlewareOptions _fluentSqlBuilderMiddlewareOptions = new FluentSqlBuilderMiddlewareOptions()
+        {
+            SqlAdapterType = SqlAdapterType.SqlServer2019,
+            Formatting = SqlBuilderFormatting.Indented
+        };
 
         [Fact]
         public void Test_Select_Distinct()
@@ -18,10 +22,12 @@ namespace FluentSqlBuilder.Test.Unit
             var tableNameAlias = "order_alias";
             var columnNameAlias = "dist_alias";
             var tableNameSource = "order";
-            var sqlBuilderWithoutAlias = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+            var sqlBuilderWithoutAlias = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
+                                             .From<OrderDataModel>()
                                              .Distinct(x => x.CustomerId);
 
-            var sqlBuilderWithAlias = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault, tableNameAlias)
+            var sqlBuilderWithAlias = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
+                                          .From<OrderDataModel>(tableNameAlias)
                                           .Distinct(x => x.CustomerId, tableNameAlias, columnNameAlias);
 
             // Act

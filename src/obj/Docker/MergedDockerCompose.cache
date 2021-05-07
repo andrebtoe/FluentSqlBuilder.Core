@@ -1,0 +1,28 @@
+networks:
+  dev-network:
+    driver: bridge
+services:
+  fluentsqlbuilder.playground:
+    build:
+      context: C:\develop\Publicos\fluent-sql-builder\src
+      dockerfile: FluentSqlBuilder.Playground/Dockerfile
+    image: fluentsqlbuilderplayground
+  mssql:
+    command:
+    - /bin/bash
+    - -c
+    - "/opt/mssql/bin/sqlservr &\nsleep 30\n\nfor fileItem in /scripts/*.sql\n  do\
+      \ /opt/mssql-tools/bin/sqlcmd -U sa -P $$SA_PASSWORD -l 30 -e -i $$fileItem\n\
+      done\n\nsleep infinity\n"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: b6WTRgh6
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    networks:
+      dev-network: null
+    ports:
+    - published: 1434
+      target: 1433
+    volumes:
+    - C:\develop\Publicos\fluent-sql-builder\src\data\mssql:/scripts/:rw
+version: '3.4'

@@ -1,4 +1,6 @@
-﻿using FluentSqlBuilder.Data.DataModel;
+﻿using FluentSqlBuilder.Core.Middlewares.Inputs;
+using FluentSqlBuilder.Core.Middlewares.Services;
+using FluentSqlBuilder.Data.DataModel;
 using SqlBuilderFluent;
 using SqlBuilderFluent.Types;
 using Xunit;
@@ -7,8 +9,11 @@ namespace FluentSqlBuilder.Test.Unit
 {
     public class SelectOrderByTest
     {
-        private readonly static SqlAdapterType _typeDefault = SqlAdapterType.SqlServer2019;
-        private readonly static SqlBuilderFormatting _formattingDefault = SqlBuilderFormatting.Indented;
+        private readonly static FluentSqlBuilderMiddlewareOptions _fluentSqlBuilderMiddlewareOptions = new FluentSqlBuilderMiddlewareOptions()
+        {
+            SqlAdapterType = SqlAdapterType.SqlServer2019,
+            Formatting = SqlBuilderFormatting.Indented
+        };
 
         [Fact]
         public void Test_Select_OrderBy_Asc_Without_Alias()
@@ -28,8 +33,10 @@ namespace FluentSqlBuilder.Test.Unit
             var tableName = "order";
             var tableNameAlias = "order_alias";
             var orderByDescription = desc ? "DESC" : "ASC";
-            var sqlBuilderWithoutAlias = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault);
-            var sqlBuilderAlias = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault, tableNameAlias);
+            var sqlBuilderWithoutAlias = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
+                                             .From<OrderDataModel>();
+            var sqlBuilderAlias = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
+                                             .From<OrderDataModel>(tableNameAlias);
 
             AddOrderBy(sqlBuilderWithoutAlias, desc, null);
             AddOrderBy(sqlBuilderAlias, desc, tableNameAlias);

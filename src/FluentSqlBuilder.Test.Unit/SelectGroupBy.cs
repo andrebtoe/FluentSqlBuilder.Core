@@ -1,4 +1,6 @@
-﻿using FluentSqlBuilder.Data.DataModel;
+﻿using FluentSqlBuilder.Core.Middlewares.Inputs;
+using FluentSqlBuilder.Core.Middlewares.Services;
+using FluentSqlBuilder.Data.DataModel;
 using SqlBuilderFluent;
 using SqlBuilderFluent.Lambdas.Inputs;
 using SqlBuilderFluent.Types;
@@ -8,8 +10,11 @@ namespace FluentSqlBuilder.Test.Unit
 {
     public class SelectGroupBy
     {
-        private readonly static SqlAdapterType _typeDefault = SqlAdapterType.SqlServer2019;
-        private readonly static SqlBuilderFormatting _formattingDefault = SqlBuilderFormatting.Indented;
+        private readonly static FluentSqlBuilderMiddlewareOptions _fluentSqlBuilderMiddlewareOptions = new FluentSqlBuilderMiddlewareOptions()
+        {
+            SqlAdapterType = SqlAdapterType.SqlServer2019,
+            Formatting = SqlBuilderFormatting.Indented
+        };
 
         [Fact]
         public void Test_Select_GroupBy_Min()
@@ -47,10 +52,12 @@ namespace FluentSqlBuilder.Test.Unit
             var tableName = "order";
             var tableNameAlias = "order_alias";
             var functionNameNormalided = selectFunction.ToString().ToUpper();
-            var sqlBuilderWithoutAlias = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault)
+            var sqlBuilderWithoutAlias = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
+                                             .From<OrderDataModel>()
                                              .GroupBy(x => x.CustomerId);
 
-            var sqlBuilderAlias = new FluentSqlBuilder<OrderDataModel>(_typeDefault, _formattingDefault, tableNameAlias)
+            var sqlBuilderAlias = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
+                                      .From<OrderDataModel>(tableNameAlias)
                                       .GroupBy(tableNameAlias, x => x.CustomerId);
 
             AddFunction(sqlBuilderWithoutAlias, null, selectFunction);

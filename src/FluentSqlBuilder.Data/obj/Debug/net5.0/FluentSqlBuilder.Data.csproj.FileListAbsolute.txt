@@ -1,0 +1,12 @@
+C:\develop\Publicos\fluent-sql-builder\src\FluentSqlBuilder.DataModel\bin\Debug\net5.0\FluentSqlBuilder.Data.deps.json
+C:\develop\Publicos\fluent-sql-builder\src\FluentSqlBuilder.DataModel\bin\Debug\net5.0\FluentSqlBuilder.Data.dll
+C:\develop\Publicos\fluent-sql-builder\src\FluentSqlBuilder.DataModel\bin\Debug\net5.0\ref\FluentSqlBuilder.Data.dll
+C:\develop\Publicos\fluent-sql-builder\src\FluentSqlBuilder.DataModel\bin\Debug\net5.0\FluentSqlBuilder.Data.pdb
+C:\develop\Publicos\fluent-sql-builder\src\FluentSqlBuilder.DataModel\obj\Debug\net5.0\FluentSqlBuilder.Data.csprojAssemblyReference.cache
+C:\develop\Publicos\fluent-sql-builder\src\FluentSqlBuilder.DataModel\obj\Debug\net5.0\FluentSqlBuilder.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\develop\Publicos\fluent-sql-builder\src\FluentSqlBuilder.DataModel\obj\Debug\net5.0\FluentSqlBuilder.Data.AssemblyInfoInputs.cache
+C:\develop\Publicos\fluent-sql-builder\src\FluentSqlBuilder.DataModel\obj\Debug\net5.0\FluentSqlBuilder.Data.AssemblyInfo.cs
+C:\develop\Publicos\fluent-sql-builder\src\FluentSqlBuilder.DataModel\obj\Debug\net5.0\FluentSqlBuilder.Data.csproj.CoreCompileInputs.cache
+C:\develop\Publicos\fluent-sql-builder\src\FluentSqlBuilder.DataModel\obj\Debug\net5.0\FluentSqlBuilder.Data.dll
+C:\develop\Publicos\fluent-sql-builder\src\FluentSqlBuilder.DataModel\obj\Debug\net5.0\ref\FluentSqlBuilder.Data.dll
+C:\develop\Publicos\fluent-sql-builder\src\FluentSqlBuilder.DataModel\obj\Debug\net5.0\FluentSqlBuilder.Data.pdb
