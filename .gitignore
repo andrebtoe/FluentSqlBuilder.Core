@@ -56,3 +56,23 @@ src/packages-microsoft-prod.deb
 src/packages-microsoft-prod.deb.1
 
 src/packages-microsoft-prod.deb.2
+
+src/FluentSqlBuilder.Playground.Console/obj/Debug/net5.0/
+
+src/FluentSqlBuilder.Playground.Console/obj/
+
+src/FluentSqlBuilder.Playground.Shared/obj/Debug/net5.0/FluentSqlBuilder.Playground.Shared.csprojAssemblyReference.cache
+
+src/FluentSqlBuilder.Playground.Shared/obj/FluentSqlBuilder.Playground.Shared.csproj.nuget.dgspec.json
+
+src/FluentSqlBuilder.Playground.Shared/obj/project.assets.json
+
+src/FluentSqlBuilder.Playground.Shared/obj/project.nuget.cache
+
+src/FluentSqlBuilder.Playground.Web/obj/Debug/net5.0/FluentSqlBuilder.Playground.Web.csprojAssemblyReference.cache
+
+src/FluentSqlBuilder.Playground.Web/obj/FluentSqlBuilder.Playground.Web.csproj.nuget.dgspec.json
+
+src/FluentSqlBuilder.Playground.Web/obj/project.assets.json
+
+src/FluentSqlBuilder.Playground.Web/obj/project.nuget.cache
