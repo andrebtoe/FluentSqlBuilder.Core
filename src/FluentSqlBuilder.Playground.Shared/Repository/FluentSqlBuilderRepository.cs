@@ -4,6 +4,7 @@ using FluentSqlBuilder.Data.DataModel;
 using SqlBuilderFluent;
 using SqlBuilderFluent.Lambdas.Inputs;
 using SqlBuilderFluent.Types;
+using System;
 
 namespace FluentSqlBuilder.Playground.Shared.Repository
 {
@@ -174,6 +175,15 @@ namespace FluentSqlBuilder.Playground.Shared.Repository
             var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
                                  .From<OrderDataModel>()
                                  .Distinct(x => x.CustomerId);
+
+            return sqlBuilder;
+        }
+
+        public static FluentSqlBuilder<OrderDataModel> SelectWithWhereDate18()
+        {
+            var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
+                                 .From<OrderDataModel>()
+                                 .Where(x => x.DateTime == DateTime.Now);
 
             return sqlBuilder;
         }

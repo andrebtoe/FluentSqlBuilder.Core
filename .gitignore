@@ -1,28 +1,38 @@
 
 src/.vs/
 
+src/obj/*
+
 src/FluentSqlBuilder/obj/
 
-src/FluentSqlBuilder.DataModel/obj/
+src/FluentSqlBuilder.DataModel/obj/*
 
-src/FluentSqlBuilder.Test.Unit/bin/
+src/FluentSqlBuilder.DataModel/bin/*
 
-src/FluentSqlBuilder.Playground/obj/
+src/FluentSqlBuilder.Test.Unit/bin/*
 
-src/FluentSqlBuilder.Test.Unit/obj/
+src/FluentSqlBuilder.Test.Unit/obj/*
 
-src/FluentSqlBuilder.Playground/bin/Debug/net5.0/
+src/FluentSqlBuilder.Playground/obj/*
 
-src/FluentSqlBuilder.DataModel/bin/Debug/net5.0/
+src/FluentSqlBuilder.Playground/bin/*
 
-src/FluentSqlBuilder.Playground/bin/Debug/
+src/FluentSqlBuilder.Playground.Console/obj/*
 
+src/FluentSqlBuilder.Playground.Console/bin/*
 
+src/FluentSqlBuilder.Playground.Shared/obj/*
 
-src/FluentSqlBuilder.Core/bin/Debug/
+src/FluentSqlBuilder.Playground.Shared/bin/*
 
-src/FluentSqlBuilder.Core/bin/Release/net5.0/
+src/FluentSqlBuilder.Playground.Web/obj/*
 
-src/FluentSqlBuilder.Core/obj/Debug/
+src/FluentSqlBuilder.Playground.Web/bin/*
 
-src/FluentSqlBuilder.Core/obj/Release/net5.0/ref/
+src/FluentSqlBuilder.Core/bin/*
+
+src/FluentSqlBuilder.Core/obj/*
+
+src/obj/Docker/*
+
+Docker/*

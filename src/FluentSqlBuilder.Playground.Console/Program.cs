@@ -86,10 +86,13 @@ namespace SqlBuilderFluent.Playground
                         case 17:
                             fluentSqlBuilderOrder = FluentSqlBuilderRepository.SelectWithDistinct17();
                             break;
+                        case 18:
+                            fluentSqlBuilderOrder = FluentSqlBuilderRepository.SelectWithWhereDate18();
+                            break;
                         default:
                             throw new ArgumentException("Number invalid");
                     }
-
+                    
                     string sqlSelect = null;
                     object data = null;
 
@@ -186,6 +189,7 @@ namespace SqlBuilderFluent.Playground
             printItem("15 - Select with alias", menuItemSelected == 15);
             printItem("16 - Select with Projection, WHERE, INNER JOIN ORDER BY and Lmit", menuItemSelected == 16);
             printItem("17 - Select with DISTINT", menuItemSelected == 17);
+            printItem("18 - Select with WHERE Date", menuItemSelected == 18);
         }
 
         private static IEnumerable<TTable> ExecuteQuery<TTable>(string sqlSelect, IDictionary<string, object> parameters)
