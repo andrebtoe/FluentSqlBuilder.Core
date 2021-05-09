@@ -1,4 +1,4 @@
 ﻿namespace SqlBuilderFluent.Lambdas.Inputs
 {
-    internal abstract class Node { }
+    public abstract class Node { }
 }

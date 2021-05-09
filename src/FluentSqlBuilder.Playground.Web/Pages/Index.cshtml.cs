@@ -1,9 +1,8 @@
 ﻿using FluentSqlBuilder.Core.Middlewares.Services.Interfaces;
 using FluentSqlBuilder.Data.DataModel;
-using FluentSqlBuilder.Playground.Shared.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Collections.Generic;
+using System;
 
 namespace FluentSqlBuilder.Playground.Web.Pages
 {
@@ -12,22 +11,14 @@ namespace FluentSqlBuilder.Playground.Web.Pages
         public IndexModel(IFluentSqlBuilderService fluentSqlBuilderService)
         {
             var sqlBuilder = fluentSqlBuilderService.From<OrderDataModel>()
-                                                    .LeftJoin<CustomerDataModel>((order, customer) => order.CustomerId == customer.Id);
+                                                    .Where(x => DateTime.Now >= x.DateTimeSave
+                                                           && x.Id == 1);
 
-            var sqlSelect = sqlBuilder.ToString();
+            var selectToUse = sqlBuilder.ToString();
         }
 
         public IActionResult OnGet()
         {
-            var selects = new List<A>()
-            {
-                new A() {
-                    SqlSelect = FluentSqlBuilderRepository.SelectSimple01().ToString()
-                }
-            };
-
-            base.ViewData.Add("Selects", selects);
-
             return Page();
         }
     }

@@ -52,16 +52,33 @@ namespace SqlBuilderFluent
             _sqlQueryBuilderExtension.AddOperator(ClauseInputOperator.Not, targetClauseType);
         }
 
-        public void AddClauseByOperation(string tableName, string columnName, string operation, object columnValue, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction)
+        public void AddClauseByOperation(string tableName, string columnName, string operation, bool literalValue, object columnValue, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction)
         {
             var tableNameToUse = _sqlQueryBuilderExtension.GetTableNameUseConsideringAlias(tableName, tableAlias);
-            var parameterNameByColumnName = _sqlQueryBuilderExtension.GetParameterNameByColumnName(columnName);
             var columnNameWithConvention = _sqlAdapter.GetColumnName(tableNameToUse, columnName);
-            var parameterFormated = _sqlAdapter.GetParameterFormated(parameterNameByColumnName);
-            var clauseInput = new ClauseInput(columnNameWithConvention, operation, parameterFormated, ClauseInputType.ByOperation);
+            var clauseInput = GetClauseInput(columnNameWithConvention, columnName, operation, literalValue, columnValue);
 
             _sqlQueryBuilderExtension.AddClauseOperation(clauseInput, targetClauseType, selectFunction);
-            _sqlQueryBuilderExtension.AddParameter(parameterNameByColumnName, columnValue);
+        }
+
+        private ClauseInput GetClauseInput(string columnNameWithConvention, string columnName, string operation, bool literalValue, object columnValue)
+        {
+            switch (literalValue)
+            {
+                case false:
+                    var parameterNameByColumnName = _sqlQueryBuilderExtension.GetParameterNameByColumnName(columnName);
+                    var parameterFormated = _sqlAdapter.GetParameterFormated(parameterNameByColumnName);
+                    var clauseInputByParameter = new ClauseInput(columnNameWithConvention, operation, parameterFormated, ClauseInputType.ByOperation);
+
+                    _sqlQueryBuilderExtension.AddParameter(parameterNameByColumnName, columnValue);
+
+                    return clauseInputByParameter;
+                case true:
+                    var parameterLiteralValue = columnValue.ToString();
+                    var clauseInputByLiteralValue = new ClauseInput(columnNameWithConvention, operation, parameterLiteralValue, ClauseInputType.ByOperation);
+
+                    return clauseInputByLiteralValue;
+            }
         }
 
         public void AddClauseByOperationComparison(string leftTableName, string leftColumnName, string operation, string rightTableName, string rightColumnName, TargetClauseType targetClauseType, SelectFunction? selectFunction)

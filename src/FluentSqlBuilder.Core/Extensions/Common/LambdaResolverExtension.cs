@@ -252,7 +252,7 @@ namespace SqlBuilderFluent.Core.Extensions.Common
             {
                 var operationValue = _operations[operation];
 
-                _sqlQueryBuilder.AddClauseByOperation(memberNode.TableName, memberNode.ColumnName, operationValue, valueNode.Value, tableAlias, targetClauseType, selectFunction);
+                _sqlQueryBuilder.AddClauseByOperation(memberNode.TableName, memberNode.ColumnName, operationValue, valueNode.LiteralValue, valueNode.Value, tableAlias, targetClauseType, selectFunction);
             }
         }
 
@@ -281,7 +281,7 @@ namespace SqlBuilderFluent.Core.Extensions.Common
             {
                 var operation = _operations[ExpressionType.Equal];
 
-                _sqlQueryBuilder.AddClauseByOperation(likeNode.MemberNode.TableName, likeNode.MemberNode.ColumnName, operation, likeNode.Value, tableAlias, targetClauseType, selectFunction);
+                _sqlQueryBuilder.AddClauseByOperation(likeNode.MemberNode.TableName, likeNode.MemberNode.ColumnName, operation, false, likeNode.Value, tableAlias, targetClauseType, selectFunction);
             }
             else
             {
@@ -303,7 +303,7 @@ namespace SqlBuilderFluent.Core.Extensions.Common
         {
             var operation = _operations[ExpressionType.Equal];
 
-            _sqlQueryBuilder.AddClauseByOperation(memberNode.TableName, memberNode.ColumnName, operation, true, tableAlias, targetClauseType, selectFunction);
+            _sqlQueryBuilder.AddClauseByOperation(memberNode.TableName, memberNode.ColumnName, operation, false, true, tableAlias, targetClauseType, selectFunction);
         }
 
         private void BuildSelect(SingleOperationNode node, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction)

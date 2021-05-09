@@ -4,18 +4,18 @@ namespace FluentSqlBuilder.Core.Inputs
 {
     public class ClauseInput
     {
-        public ClauseInput(string column, string operation, string parameterFormated, ClauseInputType type)
+        public ClauseInput(string column, string operation, string parameterFormatedOrLiteralValue, ClauseInputType type)
         {
             Column = column;
             Operation = operation;
-            ParameterFormated = parameterFormated;
+            ParameterFormatedOrLiteralValue = parameterFormatedOrLiteralValue;
             Type = type;
         }
 
         public ClauseInput(string column, string parameterFormated, ClauseInputType type)
         {
             Column = column;
-            ParameterFormated = parameterFormated;
+            ParameterFormatedOrLiteralValue = parameterFormated;
             Type = type;
         }
 
@@ -27,7 +27,7 @@ namespace FluentSqlBuilder.Core.Inputs
 
         public string Column { get; private set; }
         public string Operation { get; private set; }
-        public string ParameterFormated { get; private set; }
+        public string ParameterFormatedOrLiteralValue { get; private set; }
         public ClauseInputType Type { get; private set; }
 
         public override string ToString()
@@ -37,13 +37,13 @@ namespace FluentSqlBuilder.Core.Inputs
             switch (Type)
             {
                 case ClauseInputType.ByOperation:
-                    clause = $"{Column} {Operation} {ParameterFormated}";
+                    clause = $"{Column} {Operation} {ParameterFormatedOrLiteralValue}";
                     break;
                 case ClauseInputType.ByOperationComparison:
-                    clause = $"{Column} {Operation} {ParameterFormated}";
+                    clause = $"{Column} {Operation} {ParameterFormatedOrLiteralValue}";
                     break;
                 case ClauseInputType.ByLike:
-                    clause = $"{Column} LIKE {ParameterFormated}";
+                    clause = $"{Column} LIKE {ParameterFormatedOrLiteralValue}";
                     break;
                 case ClauseInputType.ByIsNull:
                     clause = $"{Column} IS NULL";
@@ -52,10 +52,10 @@ namespace FluentSqlBuilder.Core.Inputs
                     clause = $"{Column} IS NOT NULL";
                     break;
                 case ClauseInputType.ByIn:
-                    clause = $"{Column} IN ({ParameterFormated})";
+                    clause = $"{Column} IN ({ParameterFormatedOrLiteralValue})";
                     break;
                 case ClauseInputType.ByNotIn:
-                    clause = $"{Column} NOT IN ({ParameterFormated})";
+                    clause = $"{Column} NOT IN ({ParameterFormatedOrLiteralValue})";
                     break;
                 default:
                     throw new SqlBuilderException("'Type' invalid");

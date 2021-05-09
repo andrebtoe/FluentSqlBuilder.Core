@@ -183,7 +183,7 @@ namespace FluentSqlBuilder.Playground.Shared.Repository
         {
             var sqlBuilder = new FluentSqlBuilderService(_fluentSqlBuilderMiddlewareOptions)
                                  .From<OrderDataModel>()
-                                 .Where(x => x.DateTime == DateTime.Now);
+                                 .Where(x => x.DateTimeSave == DateTime.Now);
 
             return sqlBuilder;
         }

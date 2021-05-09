@@ -2,6 +2,9 @@
 using FluentSqlBuilder.Core.Middlewares.Services.Interfaces;
 using Microsoft.Extensions.Options;
 using SqlBuilderFluent;
+using SqlBuilderFluent.Lambdas;
+using System;
+using System.Collections.Generic;
 
 namespace FluentSqlBuilder.Core.Middlewares.Services
 {
@@ -21,7 +24,7 @@ namespace FluentSqlBuilder.Core.Middlewares.Services
 
         public FluentSqlBuilder<TTable> From<TTable>(string tableAlias = null)
         {
-            var sqlBuilder = new FluentSqlBuilder<TTable>(_fluentSqlBuilderMiddlewareOptions.SqlAdapterType, _fluentSqlBuilderMiddlewareOptions.Formatting, tableAlias);
+            var sqlBuilder = new FluentSqlBuilder<TTable>(_fluentSqlBuilderMiddlewareOptions.Providers, _fluentSqlBuilderMiddlewareOptions.SqlAdapterType, _fluentSqlBuilderMiddlewareOptions.Formatting, tableAlias);
 
             return sqlBuilder;
         }

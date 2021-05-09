@@ -9,7 +9,7 @@ namespace FluentSqlBuilder.Data.DataModel
         public int Id { get; set; }
         [Column("customer_id")]
         public int CustomerId { get; set; }
-        public DateTime DateTime { get; set; }
+        public DateTime DateTimeSave { get; set; }
         public OrderStatus Status { get; set; }
     }
 }

@@ -1,12 +1,14 @@
 ﻿namespace SqlBuilderFluent.Lambdas.Inputs
 {
-    internal class ValueNode : Node
+    public class ValueNode : Node
     {
-        public ValueNode(object value)
+        public ValueNode(object value, bool literalValue)
         {
             Value = value;
+            LiteralValue = literalValue;
         }
 
         public object Value { get; private set; }
+        public bool LiteralValue { get; set; }
     }
 }

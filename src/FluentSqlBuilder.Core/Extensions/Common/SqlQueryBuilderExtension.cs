@@ -332,7 +332,7 @@ namespace SqlBuilderFluent.Core.Extensions.Common
 
         private void AddHavingClause(ClauseInput clauseInput, SelectFunction selectFunction)
         {
-            var havingEpression = $"{selectFunction.ToString().ToUpper()}({clauseInput.Column}) {clauseInput.Operation} {clauseInput.ParameterFormated}";
+            var havingEpression = $"{selectFunction.ToString().ToUpper()}({clauseInput.Column}) {clauseInput.Operation} {clauseInput.ParameterFormatedOrLiteralValue}";
 
             _havingClause.Add(havingEpression);
         }

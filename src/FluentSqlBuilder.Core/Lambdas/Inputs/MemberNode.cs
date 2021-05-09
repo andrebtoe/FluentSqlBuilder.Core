@@ -1,6 +1,6 @@
 ﻿namespace SqlBuilderFluent.Lambdas.Inputs
 {
-    internal class MemberNode : Node
+    public class MemberNode : Node
     {
         public MemberNode(string tableName, string columnName)
         {

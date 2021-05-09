@@ -11,14 +11,21 @@ using System.Linq.Expressions;
 
 namespace SqlBuilderFluent.Lambdas
 {
+    public interface IFluentSqlBuilderProvider
+    {
+        Node GetNodeResolved(MemberExpression memberExpression, MemberExpression rootExpressionToUse);
+    }
+
     public class LambdaResolver
     {
         private readonly FluentSqlQueryBuilder _sqlQueryBuilder;
         private readonly LambdaResolverExtension _lambdaResolverExtension;
+        private readonly IDictionary<Type, Type> _providers;
 
-        public LambdaResolver(FluentSqlQueryBuilder sqlQueryBuilder, string tableAlias)
+        public LambdaResolver(FluentSqlQueryBuilder sqlQueryBuilder, IDictionary<Type, Type> providers, string tableAlias)
         {
             _sqlQueryBuilder = sqlQueryBuilder;
+            _providers = providers;
             _sqlQueryBuilder.DefineTableNameAliasOverride(tableAlias);
 
             _lambdaResolverExtension = new LambdaResolverExtension(sqlQueryBuilder);
@@ -153,7 +160,7 @@ namespace SqlBuilderFluent.Lambdas
 
         private static Node ResolveQuery(ConstantExpression constantExpression)
         {
-            var valueNode = new ValueNode(constantExpression.Value);
+            var valueNode = new ValueNode(constantExpression.Value, false);
 
             return valueNode;
         }
@@ -186,7 +193,7 @@ namespace SqlBuilderFluent.Lambdas
             else
             {
                 var value = _lambdaResolverExtension.ResolveMethodCall(callExpression);
-                var valueNode = new ValueNode(value);
+                var valueNode = new ValueNode(value, false);
 
                 return valueNode;
             }
@@ -199,6 +206,20 @@ namespace SqlBuilderFluent.Lambdas
             if (rootExpressionToUse == null)
                 rootExpressionToUse = memberExpression;
 
+            var memberType = memberExpression.Type;
+            var providerExistsByType = _providers.ContainsKey(memberType);
+            Node nodeValue;
+
+            if (!providerExistsByType)
+                nodeValue = ResolveOperatorCommon(memberExpression, rootExpressionToUse);
+            else
+                nodeValue = ResolveOperatorByProvider(memberExpression, rootExpression, memberType);
+
+            return nodeValue;
+        }
+
+        private Node ResolveOperatorCommon(MemberExpression memberExpression, MemberExpression rootExpressionToUse)
+        {
             switch (memberExpression.Expression.NodeType)
             {
                 case ExpressionType.Parameter:
@@ -215,12 +236,21 @@ namespace SqlBuilderFluent.Lambdas
                 case ExpressionType.Call:
                 case ExpressionType.Constant:
                     var value = _lambdaResolverExtension.GetExpressionValue(rootExpressionToUse);
-                    var valueNode = new ValueNode(value);
+                    var valueNode = new ValueNode(value, false);
 
                     return valueNode;
                 default:
                     throw new SqlBuilderException("Expected member expression");
             }
+        }
+
+        private Node ResolveOperatorByProvider(MemberExpression memberExpression, MemberExpression rootExpression, Type memberType)
+        {
+            var providerByType = _providers[memberType];
+            var instanceProvider = Activator.CreateInstance(providerByType) as IFluentSqlBuilderProvider;
+            var node = instanceProvider.GetNodeResolved(memberExpression, rootExpression);
+
+            return node;
         }
 
         private dynamic GetExpressionTree<TTable>(Expression<Func<TTable, bool>> expression)

@@ -25,9 +25,9 @@ namespace SqlBuilderFluent
         private SqlBuilderFluentExtension<TTable> _sqlBuilderFluentExtension;
         private TargetToSelect _targetToSelect;
 
-        public FluentSqlBuilder(SqlAdapterType sqlAdapterType, SqlBuilderFormatting formatting = SqlBuilderFormatting.None, string tableAlias = null)
+        public FluentSqlBuilder(IDictionary<Type, Type> providers, SqlAdapterType sqlAdapterType, SqlBuilderFormatting formatting = SqlBuilderFormatting.None, string tableAlias = null)
         {
-            DefineSqlAdapter(sqlAdapterType, typeof(TTable), formatting, tableAlias);
+            DefineSqlAdapter(providers, sqlAdapterType, typeof(TTable), formatting, tableAlias);
             DefineTargetToSelect(TargetToSelect.Common);
             DefineExtension();
         }
@@ -795,12 +795,12 @@ namespace SqlBuilderFluent
 
         #region Privates
 
-        private void DefineSqlAdapter(SqlAdapterType sqlAdapterType, Type typeTable, SqlBuilderFormatting formatting, string tableAlias)
+        private void DefineSqlAdapter(IDictionary<Type, Type> providers, SqlAdapterType sqlAdapterType, Type typeTable, SqlBuilderFormatting formatting, string tableAlias)
         {
             var sqlAdapter = GetInstanceSqlAdapter(sqlAdapterType);
 
             _sqlQueryBuilder = new FluentSqlQueryBuilder(sqlAdapter, typeTable, formatting, null, tableAlias);
-            _resolver = new LambdaResolver(_sqlQueryBuilder, tableAlias);
+            _resolver = new LambdaResolver(_sqlQueryBuilder, providers, tableAlias);
         }
 
         private static ISqlBuilderFluentAdapter GetInstanceSqlAdapter(SqlAdapterType sqlAdapterType)
