@@ -64,7 +64,7 @@ namespace FluentSqlBuilder.Playground.Web
 
     public class DateTimeProvider : IFluentSqlBuilderProvider
     {
-        public Node GetNodeResolved(MemberExpression memberExpression, MemberExpression rootExpressionToUse)
+        public Node GetNodeResolved(MemberExpression memberExpression)
         {
             switch (memberExpression.NodeType)
             {

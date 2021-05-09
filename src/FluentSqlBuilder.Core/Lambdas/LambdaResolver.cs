@@ -13,7 +13,7 @@ namespace SqlBuilderFluent.Lambdas
 {
     public interface IFluentSqlBuilderProvider
     {
-        Node GetNodeResolved(MemberExpression memberExpression, MemberExpression rootExpressionToUse);
+        Node GetNodeResolved(MemberExpression memberExpression);
     }
 
     public class LambdaResolver
@@ -213,7 +213,7 @@ namespace SqlBuilderFluent.Lambdas
             if (!providerExistsByType)
                 nodeValue = ResolveOperatorCommon(memberExpression, rootExpressionToUse);
             else
-                nodeValue = ResolveOperatorByProvider(memberExpression, rootExpression, memberType);
+                nodeValue = ResolveOperatorByProvider(memberExpression, memberType);
 
             return nodeValue;
         }
@@ -244,11 +244,11 @@ namespace SqlBuilderFluent.Lambdas
             }
         }
 
-        private Node ResolveOperatorByProvider(MemberExpression memberExpression, MemberExpression rootExpression, Type memberType)
+        private Node ResolveOperatorByProvider(MemberExpression memberExpression, Type memberType)
         {
             var providerByType = _providers[memberType];
             var instanceProvider = Activator.CreateInstance(providerByType) as IFluentSqlBuilderProvider;
-            var node = instanceProvider.GetNodeResolved(memberExpression, rootExpression);
+            var node = instanceProvider.GetNodeResolved(memberExpression);
 
             return node;
         }
