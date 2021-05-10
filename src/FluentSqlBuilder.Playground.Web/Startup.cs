@@ -11,9 +11,7 @@ using SqlBuilderFluent.Lambdas;
 using SqlBuilderFluent.Lambdas.Inputs;
 using SqlBuilderFluent.Types;
 using System;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 
 namespace FluentSqlBuilder.Playground.Web
 {
@@ -64,98 +62,112 @@ namespace FluentSqlBuilder.Playground.Web
 
     public class DateTimeProvider : IFluentSqlBuilderProvider
     {
-        public Node GetNodeResolved(MemberExpression memberExpression)
+        public Node GetNodeResolvedByProperty(MemberExpression memberExpression)
         {
-            switch (memberExpression.NodeType)
+            if (memberExpression.NodeType == ExpressionType.MemberAccess)
             {
-                //case ExpressionType.Parameter:
-                //    var tableName = LambdaResolverExtension.GetTableName(rootExpressionToUse);
-                //    var columnName = SqlBuilderFluentHelper.GetColumnName(rootExpressionToUse);
-                //    var memberNode = new MemberNode(tableName, columnName);
+                var memberName = memberExpression.Member.Name;
 
-                //    return memberNode;
-                case ExpressionType.MemberAccess:
-                    //var memberExpressionExpression = memberExpression.Expression as MemberExpression;
-                    //var memberExpr = (memberExpression as MemberExpression);
+                if (memberName == "Now")
+                {
+                    var literalValue = "GETDATE()";
+                    var valueNode = new ValueNode(literalValue, true);
 
-                    var name = memberExpression.Member.Name;
-                    if (name == "Now")
-                    {
-                        var value = "GETDATE()";
-                        return new ValueNode(value, true);
-                    }
-                    else
-                    {
-                        if (memberExpression.Expression.NodeType == ExpressionType.Parameter)
-                        {
-                            var tableName = LambdaResolverExtension.GetTableName(memberExpression);
-                            var columnName = SqlBuilderFluentHelper.GetColumnName(memberExpression);
-                            var memberNode = new MemberNode(tableName, columnName);
+                    return valueNode;
+                }
+                else if (memberName == "UtcNow")
+                {
+                    var literalValue = "GETUTCDATE()";
+                    var valueNode = new ValueNode(literalValue, true);
 
-                            return memberNode;
-                        }
-                    }
+                    return valueNode;
+                }
+                else if (memberName == "Today")
+                {
+                    var literalValue = "DATEADD(DAY, DATEDIFF(DAY, 0, GETDATE()), 0)";
+                    var valueNode = new ValueNode(literalValue, true);
 
-                    return null;
+                    return valueNode;
+                }
+                else if (memberExpression.Expression.NodeType == ExpressionType.Parameter)
+                {
+                    var tableName = LambdaResolverExtension.GetTableName(memberExpression);
+                    var columnName = SqlBuilderFluentHelper.GetColumnName(memberExpression);
+                    var memberNode = new MemberNode(tableName, columnName);
 
-                //var nodeQuery = ResolveQuery(memberExpressionExpression, rootExpressionToUse);
+                    return memberNode;
+                }
 
-                //return nodeQuery;
-                //case ExpressionType.Call:
-                //case ExpressionType.Constant:
-                //    var value = _lambdaResolverExtension.GetExpressionValue(rootExpressionToUse);
-                //    var valueNode = new ValueNode(value);
-
-                //return valueNode;
-                default:
-                    throw new SqlBuilderException("Expected member expression");
+                return null;
             }
 
-            throw new NotImplementedException();
+            throw new SqlBuilderException("Expected member expression");
         }
 
-        public object GetExpressionValue(Expression expression)
+        public Node GetNodeResolvedByMethod(MethodCallExpression callExpression)
         {
-            switch (expression.NodeType)
+            var methodName = callExpression.Method.Name;
+            var argumentsToUse = String.Join(',', callExpression.Arguments);
+            var memberExpressionTableAndColumn = callExpression.Object as MemberExpression;
+            var columnToUseInFunction = GetColumAndTablenWithConvention(memberExpressionTableAndColumn);
+            var nameFunctionSql = String.Empty;
+
+            switch (methodName)
             {
-                case ExpressionType.Constant:
-                    return (expression as ConstantExpression).Value;
-                case ExpressionType.Call:
-                    return ResolveMethodCall(expression as MethodCallExpression);
-                case ExpressionType.MemberAccess:
-                    var memberExpr = (expression as MemberExpression);
-                    var expressionValue = GetExpressionValue(memberExpr.Expression);
-                    dynamic member = memberExpr.Member;
-                    var value = ResolveValue(member, expressionValue);
-
-                    return value;
-                default:
-                    throw new SqlBuilderException("Expected constant expression");
+                case "AddDays":
+                    nameFunctionSql = $"DATEADD(DAY, {argumentsToUse}, {columnToUseInFunction})";
+                    break;
+                case "AddHours":
+                    nameFunctionSql = $"DATEADD(HOUR, {argumentsToUse}, {columnToUseInFunction})";
+                    break;
+                case "AddMilliseconds":
+                    nameFunctionSql = $"DATEADD(MILLISECOND, {argumentsToUse}, {columnToUseInFunction})";
+                    break;
+                case "AddMinutes":
+                    nameFunctionSql = $"DATEADD(MINUTE, {argumentsToUse}, {columnToUseInFunction})";
+                    break;
+                case "AddMonths":
+                    nameFunctionSql = $"DATEADD(MONTH, {argumentsToUse}, {columnToUseInFunction})";
+                    break;
+                case "AddSeconds":
+                    nameFunctionSql = $"DATEADD(SECOND, {argumentsToUse}, {columnToUseInFunction})";
+                    break;
+                case "AddYears":
+                    nameFunctionSql = $"DATEADD(YEAR, {argumentsToUse}, {columnToUseInFunction})";
+                    break;
             }
+
+            if(String.IsNullOrEmpty(nameFunctionSql))
+                throw new SqlBuilderException($"'{methodName}' not implemented");
+
+            var valueNode = new ValueNode(nameFunctionSql, true);
+            var valueMethodNode = new ValueMethodNode(nameFunctionSql, true);
+
+            return valueMethodNode;
         }
 
-        public object ResolveMethodCall(MethodCallExpression callExpression)
+        private string GetColumAndTablenWithConvention(MemberExpression memberExpressionTableAndColumn)
         {
-            var arguments = callExpression.Arguments.Select(GetExpressionValue).ToArray();
-            var instanceIsNotNull = callExpression.Object != null;
-            var instance = instanceIsNotNull ? GetExpressionValue(callExpression.Object) : arguments.First();
-            var returnInvokedMethod = callExpression.Method.Invoke(instance, arguments);
+            var node = GetNodeResolvedByProperty(memberExpressionTableAndColumn);
+            var nodeAsMemberNode = node as MemberNode;
+            var nodeAsValueNode = node as ValueNode;
 
-            return returnInvokedMethod;
-        }
+            if (nodeAsMemberNode != null)
+            {
+                var tableName = LambdaResolverExtension.GetTableName(memberExpressionTableAndColumn);
+                var columnName = SqlBuilderFluentHelper.GetColumnName(memberExpressionTableAndColumn);
+                var columAndTablenWithConvention = $"{tableName}.{columnName}";
 
-        public static object ResolveValue(PropertyInfo property, object instance)
-        {
-            var value = property.GetValue(instance, null);
+                return columAndTablenWithConvention;
+            }
+            else if (nodeAsValueNode != null)
+            {
+                var columnWithValueLiteral = nodeAsValueNode.Value.ToString();
 
-            return value;
-        }
+                return columnWithValueLiteral;
+            }
 
-        public static object ResolveValue(FieldInfo field, object instance)
-        {
-            var value = field.GetValue(instance);
-
-            return value;
+            return "";
         }
     }
 }

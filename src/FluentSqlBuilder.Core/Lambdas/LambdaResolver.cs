@@ -13,7 +13,8 @@ namespace SqlBuilderFluent.Lambdas
 {
     public interface IFluentSqlBuilderProvider
     {
-        Node GetNodeResolved(MemberExpression memberExpression);
+        Node GetNodeResolvedByProperty(MemberExpression memberExpression);
+        Node GetNodeResolvedByMethod(MethodCallExpression callExpression);
     }
 
     public class LambdaResolver
@@ -176,6 +177,8 @@ namespace SqlBuilderFluent.Lambdas
 
         private Node ResolveQuery(MethodCallExpression callExpression)
         {
+            var memberType = callExpression.Type;
+            var providerExistsByType = _providers.ContainsKey(memberType);
             var functionParsed = Enum.TryParse(callExpression.Method.Name, true, out LikeMethod callFunction);
 
             if (functionParsed)
@@ -189,6 +192,12 @@ namespace SqlBuilderFluent.Lambdas
                 var likeNode = new LikeNode(callFunction, memberNode, columnValue);
 
                 return likeNode;
+            }
+            else if (providerExistsByType)
+            {
+                var valueNode = ResolveOperatorByProviderByMethod(callExpression, memberType);
+
+                return valueNode;
             }
             else
             {
@@ -213,7 +222,7 @@ namespace SqlBuilderFluent.Lambdas
             if (!providerExistsByType)
                 nodeValue = ResolveOperatorCommon(memberExpression, rootExpressionToUse);
             else
-                nodeValue = ResolveOperatorByProvider(memberExpression, memberType);
+                nodeValue = ResolveOperatorByProviderByProperty(memberExpression, memberType);
 
             return nodeValue;
         }
@@ -244,11 +253,20 @@ namespace SqlBuilderFluent.Lambdas
             }
         }
 
-        private Node ResolveOperatorByProvider(MemberExpression memberExpression, Type memberType)
+        private Node ResolveOperatorByProviderByProperty(MemberExpression memberExpression, Type memberType)
         {
             var providerByType = _providers[memberType];
             var instanceProvider = Activator.CreateInstance(providerByType) as IFluentSqlBuilderProvider;
-            var node = instanceProvider.GetNodeResolved(memberExpression);
+            var node = instanceProvider.GetNodeResolvedByProperty(memberExpression);
+
+            return node;
+        }
+
+        private Node ResolveOperatorByProviderByMethod(MethodCallExpression callExpression, Type memberType)
+        {
+            var providerByType = _providers[memberType];
+            var instanceProvider = Activator.CreateInstance(providerByType) as IFluentSqlBuilderProvider;
+            var node = instanceProvider.GetNodeResolvedByMethod(callExpression);
 
             return node;
         }

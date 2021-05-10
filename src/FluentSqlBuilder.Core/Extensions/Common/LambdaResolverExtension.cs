@@ -240,7 +240,28 @@ namespace SqlBuilderFluent.Core.Extensions.Common
             BuildSelect(nodeDynamic, tableAlias, targetClauseType, selectFunction);
         }
 
+        private void BuildSelect(ValueMethodNode v, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction)
+        {
+            
+        }
+
         private void BuildSelect(MemberNode memberNode, ValueNode valueNode, ExpressionType operation, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction)
+        {
+            var valueIsNull = valueNode.Value == null;
+
+            if (valueIsNull)
+            {
+                ResolveNullValue(memberNode, operation, tableAlias, targetClauseType, selectFunction);
+            }
+            else
+            {
+                var operationValue = _operations[operation];
+
+                _sqlQueryBuilder.AddClauseByOperation(memberNode.TableName, memberNode.ColumnName, operationValue, valueNode.LiteralValue, valueNode.Value, tableAlias, targetClauseType, selectFunction);
+            }
+        }
+
+        private void BuildSelect(MemberNode memberNode, ValueMethodNode valueNode, ExpressionType operation, string tableAlias, TargetClauseType targetClauseType, SelectFunction? selectFunction)
         {
             var valueIsNull = valueNode.Value == null;
 

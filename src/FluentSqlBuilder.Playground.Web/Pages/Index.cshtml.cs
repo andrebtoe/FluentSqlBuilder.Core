@@ -10,21 +10,19 @@ namespace FluentSqlBuilder.Playground.Web.Pages
     {
         public IndexModel(IFluentSqlBuilderService fluentSqlBuilderService)
         {
-            var sqlBuilder = fluentSqlBuilderService.From<OrderDataModel>()
-                                                    .Where(x => DateTime.Now >= x.DateTimeSave
-                                                           && x.Id == 1);
+            //var sqlBuilder01 = fluentSqlBuilderService.From<OrderDataModel>()
+            //                                          .Where(x => DateTime.Now >= x.DateTimeSave
+            //                                                 && x.Id == 1);
 
-            var selectToUse = sqlBuilder.ToString();
+            var sqlBuilder02 = fluentSqlBuilderService.From<OrderDataModel>()
+                                                      .Where(x => x.DateTimeSave.AddHours(10) >= DateTime.Now);
+
+            var selectToUse02 = sqlBuilder02.ToString();
         }
 
         public IActionResult OnGet()
         {
             return Page();
         }
-    }
-
-    public class A
-    {
-        public string SqlSelect { get; set; }
     }
 }
